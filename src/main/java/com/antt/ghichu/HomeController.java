@@ -3,6 +3,8 @@ package com.antt.ghichu;
 import java.sql.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +44,31 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
-	public String home(Locale locale, Model model, @PathVariable("id") String id) {
+	public String home(Locale locale, Model model, @PathVariable("id") String id
+			,HttpServletRequest request) {
 		userCount++;
 		System.out.println(userCount);
 		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
 		if (id.equals(fixId)) { // When the url is correct and dont have
 								// anychange;
-		
+
 			Note curNote = noteDAO.findNote(fixId);
 			if (curNote == null) { // neu chua co thi tao moi
 				Date date = new Date(new java.util.Date().getTime());
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
-			//System.out.println(curNote.getContent());
-			model.addAttribute("contents",curNote.getContent().replaceAll("(\\r|\\n|\\r\\n)", "\\\\n"));
+			model.addAttribute("contents",
+					curNote.getContent()
+							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
+							.replaceAll("'", "\\\\'"));
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
+			String userAgent = request.getHeader("User-Agent");
+			if (userAgent.contains("Mobile")) {
+				return "mainView_Mobile";
+			}
+			System.out.println(userAgent);
 			return "autoresize";
 		}
 		return "redirect:/" + fixId;
@@ -69,9 +79,10 @@ public class HomeController {
 			@RequestParam(value = "contents", required = false) String contents,
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "type", required = false) String type) {
-		System.out.println("Receive add request " + contents + noteid+ type);
+		System.out.println("Receive add request " + contents + noteid + type);
 		Date date = new Date(new java.util.Date().getTime());
-		noteDAO.editNote(new Note(noteid, contents, Integer.parseInt(type), date, date));
+		noteDAO.editNote(new Note(noteid, contents, Integer.parseInt(type),
+				date, date));
 		return "true";
 	}
 

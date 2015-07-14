@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<!--320-->
+
 <title>Editor</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 <script type="text/javascript"
@@ -42,6 +46,7 @@
 		editor.setOptions({
 			maxLines : Infinity
 		});
+		editor.getSession().setUseWrapMode(true);
 		editor.on('input', function() {
 			if (isFirst) {
 				isFirst = false;
