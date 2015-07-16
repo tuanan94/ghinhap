@@ -51,6 +51,20 @@
 			window.clearInterval(intervalId);
 			intervalId = (setTime(3000));
 		});
+		//New
+		editor.onmousedown = function() {
+			paste.style.display = 'block';
+		};
+
+		editor.onmouseup = function() {
+			setTimeout(function() {
+				paste.style.display = 'none';
+			}, 0);
+		};
+		//New
+		editor.oncontextmenu = function() {
+			paste.setSelectionRange(0, 0);
+		};
 		//set up when document ready
 		$(document).ready(function() {
 			console.log("ready!");

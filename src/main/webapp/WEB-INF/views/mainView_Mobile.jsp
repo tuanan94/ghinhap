@@ -1,27 +1,29 @@
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>JQuery LinedTextArea Demo</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 <!--320-->
-
-<title>Editor</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="./resources/jquery-linedtextarea.js"></script>
+<link href="./resources/jquery-linedtextarea.css" type="text/css"
+	rel="stylesheet" />
+<style type="text/css">
+</style>
+<style type="text/css">
+textarea {
+	width: 100%;
+	min-height: 100%;
+	word-wrap: break-word;
+	height: 300%;
+	font-size: 100%;
+}
+</style>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
-<script src=./resources/mousetrap.min.js></script>
-<script src="./resources/src/ace.js"></script>
-
 </head>
 <body>
-	<c:set var="a" value="${requestScope.contents }"></c:set>
-
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
@@ -33,45 +35,41 @@
 			<option value="3">C#</option>
 		</select>
 	</div>
-	<pre id="editor"></pre>
-	<!-- load ace -->
+	<textarea class="lined" rows="200" cols="60">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+
+The naming has caused confusion, giving the 
+impression that the language is a spin-off of Java, 
+and it has been characterized by many as a 
+marketing ploy by Netscape to give JavaScript the 
+cachet of what was then the hot new web-programming language.
+</textarea>
+
 	<script>
-		//set up for editor
-		var isFirst = true;
-		var editor = ace.edit("editor");
-		var intervalId;
-		editor.setTheme("ace/theme/tomorrow");
-		editor.session.setMode("ace/mode/html");
-		editor.setAutoScrollEditorIntoView(true);
-		editor.setOptions({
-			maxLines : Infinity
+		$(function() {
+			$(".lined").linedtextarea({
+			//selectedLine : 1
+			});
 		});
-		editor.getSession().setUseWrapMode(true);
-		editor.on('input', function() {
-			if (isFirst) {
-				isFirst = false;
-				return;
-			}
-			setInputColor('red');
-			window.clearInterval(intervalId);
-			intervalId = (setTime(3000));
-		});
-		//set up when document ready
+	</script>
+	<script>
 		$(document).ready(function() {
+
 			console.log("ready!");
-			editor.setValue('${contents}', 1);
-			setEditorType('${type}');
+			$("textarea").val('${contents}');
 			setInputColor('green');
 		});
-		function convertString(raw) {
-			raw.replace("Microsoft", "W3Schools");
-			return raw;
-		}
-
-		//set Time for Auto send function
-		function setTime(time) {
-			return window.setInterval($.sendContentToServer, time);
-		}
 		$.sendContentToServer = function sendContentToServer() {
 			console.log("send content to server");
 			setInputColor('orange');
@@ -100,27 +98,7 @@
 			intervalId = (setTime(3000));
 			setEditorType(document.getElementById('typeSelector').value);
 		}
-		//set Editor Type
-		function setEditorType(value) {
-			switch (value) {
-			case '0':
-				editor.session.setMode("ace/mode/text");
-
-				break;
-			case '1':
-				editor.session.setMode("ace/mode/html");
-				break;
-			case '2':
-				editor.session.setMode("ace/mode/java");
-				break;
-			case '3':
-				editor.session.setMode("ace/mode/csharp");
-				break;
-			}
-			$('#typeSelector option').eq(value).prop('selected', true);
-		}
 	</script>
-
 	<script type="text/javascript"
 		src="./resources/script/setInputColor.js"></script>
 	<script type="text/javascript" src="./resources/script/saveFunction.js"></script>
