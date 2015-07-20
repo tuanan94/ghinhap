@@ -69,7 +69,6 @@ public class HomeController {
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
 			model.addAttribute("isLock", curNote.isLock());
-			System.out.println(curNote.isLock());
 			String userAgent = request.getHeader("User-Agent");
 			if (userAgent.contains("Mobile")) {
 				return "mainView_Mobile";
@@ -94,8 +93,9 @@ public class HomeController {
 	public @ResponseBody String setPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "password", required = false) String password) {
-		System.out.println("set Password FunctionnIscalled with noteid="+noteid
-				+"password"+password);
+		if (password==null||password.equals("")) {
+			return "false";
+		}
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
 		if (getOldNotePass!=null&&(!getOldNotePass.getPassword().equals(""))) {
 			return "false";
@@ -103,7 +103,6 @@ public class HomeController {
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newNotePass = new NotePass(noteid, password, date);
 		notePassDAO.editNotePass(newNotePass);
-		
 		noteDAO.setLock(noteid, true);
 		
 		return "true";

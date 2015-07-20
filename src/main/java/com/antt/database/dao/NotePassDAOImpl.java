@@ -54,7 +54,6 @@ public class NotePassDAOImpl implements NotePassDAO {
 		oldNotePass.setNoteId(notePass.getNoteId());
 		oldNotePass.setPassword(notePass.getPassword());
 		oldNotePass.setUpdateTime(new Date(new java.util.Date().getTime()));
-		System.out.println(oldNotePass.getPassword()+"updatedPassword");
 		sessionFactory.getCurrentSession().save(oldNotePass);
 		return false;
 	}

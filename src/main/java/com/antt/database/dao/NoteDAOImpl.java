@@ -51,13 +51,11 @@ public class NoteDAOImpl implements NoteDAO {
 		Note oldNote = findNote(note.getNoteid());
 		if (oldNote==null) {
 			System.out.println("oldNote == null");
-			return false;
-			
+			return false;			
 		}
 		if (oldNote.isLock()) {
 			return false;
 		}
-		
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());
 		oldNote.setModifydate(new Date(new java.util.Date().getTime()));
