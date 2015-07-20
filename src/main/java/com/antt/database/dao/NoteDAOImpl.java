@@ -32,9 +32,7 @@ public class NoteDAOImpl implements NoteDAO {
 			return false;
 		}
 		Session session = sessionFactory.getCurrentSession();
-		//Transaction transaction = session.beginTransaction();
 		session.save(note);
-		//transaction.commit();
 		return true;
 	}
 	@Override
@@ -59,7 +57,6 @@ public class NoteDAOImpl implements NoteDAO {
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());
 		oldNote.setModifydate(new Date(new java.util.Date().getTime()));
-		System.out.println("note before save: "+oldNote);
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}

@@ -16,17 +16,19 @@
 
 </head>
 <body>
-	<c:set var="a" value="${requestScope.contents }"></c:set>
-
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
+		<img id="imglock" alt="lock" src="./resources/img/unlock.png" width="20px" height="20px">
+		
 		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
 			<option value="3">C#</option>
+			<option value="4">Objective-C</option>
+			<option value="5">Javascript</option>
 		</select>
 	</div>
 	<pre id="editor"></pre>
@@ -125,6 +127,12 @@
 			case '3':
 				editor.session.setMode("ace/mode/csharp");
 				break;
+			case '4':
+				editor.session.setMode("ace/mode/objectivec");
+				break;
+			case '5':
+				editor.session.setMode("ace/mode/javascript");
+				break;			
 			}
 			$('#typeSelector option').eq(value).prop('selected', true);
 		}

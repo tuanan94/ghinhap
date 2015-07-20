@@ -29,10 +29,6 @@ public class HomeController {
 	int userCount = 0;
 	@Autowired
 	NoteDAO noteDAO;
-
-	// private static final Logger logger =
-	// LoggerFactory.getLogger(HomeController.class);
-
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * value={"/method1","/method1/second"}
@@ -61,14 +57,14 @@ public class HomeController {
 			model.addAttribute("contents",
 					curNote.getContent()
 							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
-							.replaceAll("'", "\\\\'"));
+							.replaceAll("'", "\\\\'")); 
+			
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
 			String userAgent = request.getHeader("User-Agent");
 			if (userAgent.contains("Mobile")) {
 				return "mainView_Mobile";
 			}
-			System.out.println(userAgent);
 			return "autoresize";
 		}
 		return "redirect:/" + fixId;
@@ -79,7 +75,6 @@ public class HomeController {
 			@RequestParam(value = "contents", required = false) String contents,
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "type", required = false) String type) {
-		System.out.println("Receive add request " + contents + noteid + type);
 		Date date = new Date(new java.util.Date().getTime());
 		noteDAO.editNote(new Note(noteid, contents, Integer.parseInt(type),
 				date, date));

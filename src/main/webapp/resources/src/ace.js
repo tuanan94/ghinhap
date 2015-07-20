@@ -14564,10 +14564,6 @@ overflow: hidden;\
 top: 0;\
 bottom: 0;\
 background-color: inherit;\
--ms-user-select: none;\
--moz-user-select: none;\
--webkit-user-select: none;\
-user-select: none;\
 cursor: text;\
 }\
 .ace_content {\
@@ -14602,9 +14598,6 @@ bottom: 0;\
 left: 0;\
 cursor: default;\
 z-index: 4;\
--ms-user-select: none;\
--moz-user-select: none;\
--webkit-user-select: none;\
 user-select: none;\
 }\
 .ace_gutter-active-line {\
@@ -14679,10 +14672,6 @@ font: inherit;\
 padding: 0 1px;\
 margin: 0 -1px;\
 text-indent: -1em;\
--ms-user-select: text;\
--moz-user-select: text;\
--webkit-user-select: text;\
-user-select: text;\
 }\
 .ace_text-input.ace_composition {\
 background: inherit;\

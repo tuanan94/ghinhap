@@ -5,8 +5,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 <!--320-->
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script type="text/javascript"
+	src="http://code.jquery.com/jquery.min.js"></script>
 <script src="./resources/jquery-linedtextarea.js"></script>
 <link href="./resources/jquery-linedtextarea.css" type="text/css"
 	rel="stylesheet" />
@@ -19,6 +19,9 @@ textarea {
 	word-wrap: break-word;
 	height: 300%;
 	font-size: 100%;
+}
+#headdiv{
+	height: 30px
 }
 </style>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
@@ -35,28 +38,11 @@ textarea {
 			<option value="3">C#</option>
 		</select>
 	</div>
-	<textarea class="lined" rows="200" cols="60">JavaScript was originally developed by Brendan 
-Eich of Netscape under the name Mocha, 
-which was later renamed to LiveScript, 
-and finally to JavaScript. 
-
-The change of name from LiveScript to JavaScript roughly 
-coincided with Netscape adding support for 
-Java technology in its Netscape Navigator 
-web browser. 
-
-JavaScript was first introduced 
-and deployed in the Netscape browser version 
-2.0B3 in December 1995. 
-
-The naming has caused confusion, giving the 
-impression that the language is a spin-off of Java, 
-and it has been characterized by many as a 
-marketing ploy by Netscape to give JavaScript the 
-cachet of what was then the hot new web-programming language.
+	<textarea id="mainTextArea" onkeypress="onTextChange()"  class="lined" rows="200" cols="60">
 </textarea>
 
 	<script>
+		var intervalId;
 		$(function() {
 			$(".lined").linedtextarea({
 			//selectedLine : 1
@@ -69,7 +55,12 @@ cachet of what was then the hot new web-programming language.
 			console.log("ready!");
 			$("textarea").val('${contents}');
 			setInputColor('green');
+			setEditorType('${type}');
 		});
+		//set Time for Auto send function
+		function setTime(time) {
+			return window.setInterval($.sendContentToServer, time);
+		}
 		$.sendContentToServer = function sendContentToServer() {
 			console.log("send content to server");
 			setInputColor('orange');
@@ -77,7 +68,7 @@ cachet of what was then the hot new web-programming language.
 				type : "POST",
 				url : "ajax/savecontent",
 				data : {
-					contents : editor.getValue(),
+					contents : $('#mainTextArea').val(),
 					noteid : '${noteid}',
 					type : document.getElementById('typeSelector').value
 
@@ -96,8 +87,20 @@ cachet of what was then the hot new web-programming language.
 			setInputColor('red');
 			window.clearInterval(intervalId);
 			intervalId = (setTime(3000));
-			setEditorType(document.getElementById('typeSelector').value);
 		}
+		//onTextViewChange
+		function onTextChange() {
+			setInputColor('red');
+			window.clearInterval(intervalId);
+			intervalId = (setTime(3000));
+		}
+		
+	</script>
+	<script>
+	//set Editor Type
+	function setEditorType(value) {
+		$('#typeSelector option').eq(value).prop('selected',true);
+	}
 	</script>
 	<script type="text/javascript"
 		src="./resources/script/setInputColor.js"></script>

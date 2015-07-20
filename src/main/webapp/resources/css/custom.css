@@ -33,6 +33,11 @@
 	left: 5px;
 	top: 5px;
 }
+#imglock{
+	margin-left: 20px;
+	background: #D2D3D4;
+	height: 40px;
+}
 
 #mainname {
 	display: inline-block;
