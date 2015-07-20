@@ -6,6 +6,7 @@ public class Note {
 	private String noteid;
 	private String content;
 	private int type;
+	private boolean lock;
 	private Date createddate;
 	private Date modifydate;
 	public String getNoteid() {
@@ -38,6 +39,14 @@ public class Note {
 	public void setModifydate(Date modifydate) {
 		this.modifydate = modifydate;
 	}
+	
+	
+	public boolean isLock() {
+		return lock;
+	}
+	public void setLock(boolean lock) {
+		this.lock = lock;
+	}
 	public Note() {
 		// TODO Auto-generated constructor stub
 	}
@@ -47,8 +56,19 @@ public class Note {
 		this.type = type;
 		this.createddate = createdDate;
 		this.modifydate = ModifyDate;
+		this.lock = false;
 		
 	}
+	public Note(String noteid, String content, int type, Date createdDate, Date ModifyDate, boolean isLocked) {
+		this.noteid = noteid;
+		this.content =  content;
+		this.type = type;
+		this.createddate = createdDate;
+		this.modifydate = ModifyDate;
+		this.lock = isLocked;
+		
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder =  new StringBuilder();

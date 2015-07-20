@@ -43,17 +43,21 @@
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
 		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml"></beans:property>
 	</beans:bean>
-	
+
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="sessionFactory"></beans:property>
 	</beans:bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<beans:bean id="noteDAO" class="com.antt.database.dao.NoteDAOImpl">
 		<beans:constructor-arg>
 			<beans:ref bean="sessionFactory" />
 		</beans:constructor-arg>
 	</beans:bean>
-
+	<beans:bean id="notePassDAO" class="com.antt.database.dao.NotePassDAOImpl">
+		<beans:constructor-arg>
+			<beans:ref bean="sessionFactory" />
+		</beans:constructor-arg>
+	</beans:bean>
 </beans:beans>

@@ -20,9 +20,14 @@
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
-		<img id="imglock" alt="lock" src="./resources/img/unlock.png" width="20px" height="20px">
-		
-		<select id="typeSelector" onchange="typeChange()">
+		<img id="imglock" onclick="lockClick()" alt="lock"
+			src="./resources/img/unlock.png" width="20px" height="20px">
+		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
+			src="./resources/img/lock.png" width="20px" height="20px">
+			
+			
+			 <select
+			id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
@@ -40,7 +45,7 @@
 		var intervalId;
 		editor.setTheme("ace/theme/tomorrow");
 		editor.session.setMode("ace/mode/html");
-		editor.setAutoScrollEditorIntoView(true);
+	//	editor.setAutoScrollEditorIntoView(true);
 		editor.setOptions({
 			maxLines : Infinity
 		});
@@ -69,10 +74,21 @@
 		};
 		//set up when document ready
 		$(document).ready(function() {
+			setInitParam('${contents}', '${type}', '${isLock}');
+			/* 
 			console.log("ready!");
 			editor.setValue('${contents}', 1);
 			setEditorType('${type}');
 			setInputColor('green');
+			var isLock = '${isLock}';
+			if (isLock === 'true') {
+				$('#imgUnlock').css("visibility","visible");
+				editor.setReadOnly(true);
+				$('#typeSelector').prop( "disabled", true );
+			} else{
+				$('#imglock').css("visibility","visible");
+			} */
+
 		});
 		function convertString(raw) {
 			raw.replace("Microsoft", "W3Schools");
@@ -132,14 +148,64 @@
 				break;
 			case '5':
 				editor.session.setMode("ace/mode/javascript");
-				break;			
+				break;
 			}
 			$('#typeSelector option').eq(value).prop('selected', true);
+		}
+
+		function lockClick() {
+			var retVal = prompt("Enter your password");
+			if (retVal !== '') {
+				$.ajax({
+					type : "POST",
+					url : "ajax/setpassword",
+					data : {
+						noteid : '${noteid}',
+						password : retVal
+
+					},
+					success : function(data) {
+						if(data!=="true"){
+							alert(data);
+						}
+						
+						location.reload();
+					},
+					error : function(data) {
+						alert("set fail")
+					}
+				});
+			}
+
+		}
+		function unLockClick() {
+			var retVal = prompt("Enter your password");
+			if (retVal !== '') {
+				$.ajax({
+					type : "POST",
+					url : "ajax/unsetpassword",
+					data : {
+						noteid : '${noteid}',
+						password : retVal
+
+					},
+					success : function(data) {
+						if(data!=="true"){
+							alert(data);
+						}
+						location.reload();
+					},
+					error : function(data) {
+						alert("set fail")
+					}
+				});
+			}
 		}
 	</script>
 
 	<script type="text/javascript"
 		src="./resources/script/setInputColor.js"></script>
 	<script type="text/javascript" src="./resources/script/saveFunction.js"></script>
+	<script type="text/javascript" src="./resources/script/functions.js"></script>
 </body>
 </html>

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.antt.database.dao.NoteDAO;
 import com.antt.database.dao.NoteDAOImpl;
+import com.antt.database.dao.NotePassDAO;
 import com.antt.database.model.Note;
+import com.antt.database.model.NotePass;
 
 /**
  * Handles requests for the application home page.
@@ -29,6 +31,9 @@ public class HomeController {
 	int userCount = 0;
 	@Autowired
 	NoteDAO noteDAO;
+	@Autowired
+	NotePassDAO notePassDAO;
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * value={"/method1","/method1/second"}
@@ -40,8 +45,10 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
-	public String home(Locale locale, Model model, @PathVariable("id") String id
-			,HttpServletRequest request) {
+	public String home(Locale locale, Model model,
+			@PathVariable("id") String id, HttpServletRequest request) {
+		Date date2 = new Date(new java.util.Date().getTime());
+		notePassDAO.addNotePass(new NotePass("public", "dead", date2));
 		userCount++;
 		System.out.println(userCount);
 		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
@@ -57,10 +64,12 @@ public class HomeController {
 			model.addAttribute("contents",
 					curNote.getContent()
 							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
-							.replaceAll("'", "\\\\'")); 
-			
+							.replaceAll("'", "\\\\'"));
+
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
+			model.addAttribute("isLock", curNote.isLock());
+			System.out.println(curNote.isLock());
 			String userAgent = request.getHeader("User-Agent");
 			if (userAgent.contains("Mobile")) {
 				return "mainView_Mobile";
@@ -81,4 +90,41 @@ public class HomeController {
 		return "true";
 	}
 
+	@RequestMapping(value = "/ajax/setpassword", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String setPassword(
+			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "password", required = false) String password) {
+		System.out.println("set Password FunctionnIscalled with noteid="+noteid
+				+"password"+password);
+		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
+		if (getOldNotePass!=null&&(!getOldNotePass.getPassword().equals(""))) {
+			return "false";
+		}
+		Date date = new Date(new java.util.Date().getTime());
+		NotePass newNotePass = new NotePass(noteid, password, date);
+		notePassDAO.editNotePass(newNotePass);
+		
+		noteDAO.setLock(noteid, true);
+		
+		return "true";
+	}
+	
+	@RequestMapping(value = "/ajax/unsetpassword", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String unSetPassword(
+			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "password", required = false) String password) {
+		System.out.println("Unset Password FunctionnIscalled with noteid="+noteid
+				+"password"+password);
+		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
+		if (getOldNotePass==null||(!getOldNotePass.getPassword().equals(password))) {
+			return "Password không đúng!";
+		}
+		Date date = new Date(new java.util.Date().getTime());
+		NotePass newNotePass = new NotePass(noteid, "", date);
+		notePassDAO.editNotePass(newNotePass);
+		
+		noteDAO.setLock(noteid, false);
+		
+		return "true";
+	}
 }

@@ -54,12 +54,26 @@ public class NoteDAOImpl implements NoteDAO {
 			return false;
 			
 		}
+		if (oldNote.isLock()) {
+			return false;
+		}
+		
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());
 		oldNote.setModifydate(new Date(new java.util.Date().getTime()));
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}
+
+	@Override
+	@Transactional
+	public boolean setLock(String Noteid, boolean isLock) {
+		Note oldNote = findNote(Noteid);
+		oldNote.setLock(isLock);
+		sessionFactory.getCurrentSession().save(oldNote);
+		return false;
+	}
+	
 	
 
 }

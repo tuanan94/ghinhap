@@ -10,5 +10,11 @@
         <property name="type" column="type" />
         <property name="createddate" column="createddate" />
         <property name="modifydate" column="modifydate" />
+        <property name="lock" column="islock" />
     </class> 
+    <class name="NotePass" table="notepass">
+    	<id name="noteId" column="noteId" ></id>
+    	<property name="password" column="password"/>
+    	<property name="updateTime" column="updatetime"/>
+    </class>
 </hibernate-mapping>
