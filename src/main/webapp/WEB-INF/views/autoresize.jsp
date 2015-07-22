@@ -12,15 +12,16 @@
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script src="./resources/src/ace.js"></script>
 <script type="text/javascript" src="./resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="./resources/script/saveFunction.js"></script>
+<script type="text/javascript" src="./resources/script/shortcut.js"></script>
 <script type="text/javascript" src="./resources/script/functions.js"></script>
+<script type="text/javascript" src="./resources/src/ext-language_tools.js"></script>
+
 </head>
 <body>
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
-		<img alt="" src="">
 		<img id="imglock" onclick="lockClick()" alt="lock"
 			src="./resources/img/unlock.png" width="20px" height="20px" /> 
 		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
@@ -46,6 +47,7 @@
 		//set up when document ready
 		$(document).ready(function() {
 			setInitParam('${contents}', '${type}', '${isLock}');
+			
 		});
 		$.sendContentToServer = function sendContentToServer() {
 			var type = document.getElementById('typeSelector').value;
