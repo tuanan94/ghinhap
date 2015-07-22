@@ -10,8 +10,8 @@
 <script src="./resources/jquery-linedtextarea.js"></script>
 <link href="./resources/jquery-linedtextarea.css" type="text/css"
 	rel="stylesheet" />
-<style type="text/css">
-</style>
+<script type="text/javascript" src="./resources/script/functions.js"></script>
+<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 <style type="text/css">
 textarea {
 	width: 100%;
@@ -31,6 +31,11 @@ textarea {
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
+		<img alt="" src="">
+		<img id="imglock" onclick="lockClick()" alt="lock"
+			src="./resources/img/unlock.png" width="20px" height="20px" /> 
+		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
+		    src="./resources/img/lock.png" width="20px" height="20px" />
 		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
@@ -45,41 +50,32 @@ textarea {
 		var intervalId;
 		$(function() {
 			$(".lined").linedtextarea({
-			//selectedLine : 1
 			});
 		});
 	</script>
 	<script>
 		$(document).ready(function() {
-
-			console.log("ready!");
-			$("textarea").val('${contents}');
+			$("#mainTextArea").val('${contents}');
 			setInputColor('green');
 			setEditorType('${type}');
+			var isLock = '${isLock}';
+			if (isLock === 'true') {
+				$('#imgUnlock').css("visibility", "visible");
+				$('#mainTextArea').prop("readonly", true);
+				$('#typeSelector').prop("disabled", true);
+			} else {
+				$('#imglock').css("visibility", "visible");
+			}
+
+			
 		});
 		//set Time for Auto send function
 		function setTime(time) {
 			return window.setInterval($.sendContentToServer, time);
 		}
 		$.sendContentToServer = function sendContentToServer() {
-			console.log("send content to server");
-			setInputColor('orange');
-			$.ajax({
-				type : "POST",
-				url : "ajax/savecontent",
-				data : {
-					contents : $('#mainTextArea').val(),
-					noteid : '${noteid}',
-					type : document.getElementById('typeSelector').value
-
-				},
-				success : function(data) {
-					setInputColor('green');
-				},
-				error : function(data) {
-					setInputColor('red');
-				}
-			});
+			var type = document.getElementById('typeSelector').value;
+			requestUpdateContent($('#mainTextArea').val(), '${noteid}', type);
 			window.clearInterval(intervalId);
 		}
 		//setTime for change Type
@@ -93,6 +89,12 @@ textarea {
 			setInputColor('red');
 			window.clearInterval(intervalId);
 			intervalId = (setTime(3000));
+		}
+		function lockClick() {
+			requestLock('${noteid}');
+		}
+		function unLockClick() {
+			requestUnlock('${noteid}');
 		}
 		
 	</script>

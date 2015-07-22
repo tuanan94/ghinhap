@@ -48,7 +48,6 @@ public class HomeController {
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
 		Date date2 = new Date(new java.util.Date().getTime());
-		notePassDAO.addNotePass(new NotePass("public", "dead", date2));
 		userCount++;
 		System.out.println(userCount);
 		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
