@@ -4,11 +4,7 @@ import java.sql.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.antt.database.dao.NoteDAO;
-import com.antt.database.dao.NoteDAOImpl;
 import com.antt.database.dao.NotePassDAO;
 import com.antt.database.model.Note;
 import com.antt.database.model.NotePass;
@@ -29,6 +24,7 @@ import com.antt.database.model.NotePass;
 @Controller
 public class HomeController {
 	int userCount = 0;
+	private static final String emptyLines = "\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n";
 	@Autowired
 	NoteDAO noteDAO;
 	@Autowired
@@ -47,7 +43,6 @@ public class HomeController {
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
-		Date date2 = new Date(new java.util.Date().getTime());
 		userCount++;
 		System.out.println(userCount);
 		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
@@ -60,6 +55,13 @@ public class HomeController {
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
+			//Add more empty line to note
+			curNote.setContent(curNote.getContent()+emptyLines);
+			
+			
+			
+			
+			//Add more empty line to note
 			model.addAttribute("contents",
 					curNote.getContent()
 							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
@@ -82,8 +84,16 @@ public class HomeController {
 			@RequestParam(value = "contents", required = false) String contents,
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "type", required = false) String type) {
+		String receivedContents = contents;
 		Date date = new Date(new java.util.Date().getTime());
-		noteDAO.editNote(new Note(noteid, contents, Integer.parseInt(type),
+		while (receivedContents.length()>0 && receivedContents.charAt(receivedContents.length()-1)==10) {
+			receivedContents = receivedContents.substring(0, receivedContents.length()-1);
+		}
+		for (int i = receivedContents.length()-1; i >= 0; i--) {
+//			t = receivedContents.charAt(i);
+//			System.out.println((int)t);
+		}
+		noteDAO.editNote(new Note(noteid, receivedContents, Integer.parseInt(type),
 				date, date));
 		return "true";
 	}
