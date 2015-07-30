@@ -103,7 +103,7 @@ textarea {
 		}
 		//onresize the browser window
 		function resizetoFix() {
-			$('.linedwrap').css("width","100%");
+			$('.linedwrap').css("width","99.5%");
 		}
 	</script>
 	<script>
