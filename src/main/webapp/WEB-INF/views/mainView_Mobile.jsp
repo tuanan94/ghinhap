@@ -29,7 +29,7 @@ textarea {
 </style>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 </head>
-<body>
+<body  onresize="resizetoFix()">
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
@@ -101,7 +101,10 @@ textarea {
 		function unLockClick() {
 			requestUnlock('${noteid}');
 		}
-		
+		//onresize the browser window
+		function resizetoFix() {
+			$('.linedwrap').css("width","100%");
+		}
 	</script>
 	<script>
 	//set Editor Type
