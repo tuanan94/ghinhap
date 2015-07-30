@@ -14,7 +14,8 @@
 <script type="text/javascript" src="./resources/script/setInputColor.js"></script>
 <script type="text/javascript" src="./resources/script/shortcut.js"></script>
 <script type="text/javascript" src="./resources/script/functions.js"></script>
-<script type="text/javascript" src="./resources/src/ext-language_tools.js"></script>
+<script type="text/javascript"
+	src="./resources/src/ext-language_tools.js"></script>
 
 </head>
 <body>
@@ -23,10 +24,9 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="./resources/img/unlock.png" width="20px" height="20px" /> 
-		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
-		    src="./resources/img/lock.png" width="20px" height="20px" />
-		<select
+			src="./resources/img/unlock.png" width="20px" height="20px" /> <img
+			id="imgUnlock" onclick="unLockClick()" alt="unlock"
+			src="./resources/img/lock.png" width="20px" height="20px" /> <select
 			id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
@@ -36,8 +36,66 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
+	<!-- Editor -->
 	<pre id="editor"></pre>
+	<!-- Short link -->
+	<input id="shortLinkcheckBox" type="checkbox" value="check-box" disabled="disabled" onchange="shortLinkCheckBoxOnchange()"/>Rút gọn link
+	<div id="loading">
+		<img alt="Loading..." src="./resources/img/loading.gif"/>
+	</div>
+	
+	<!-- Short link -->
+	<script>
+		function shortLinkCheckBoxOnchange(){
+			var isCheck = $('#shortLinkcheckBox').prop("checked");
+			if(isCheck){
+				if ('${isLock}'==='false') {
+					var retVal = prompt("Enter your password");
+					if (retVal == null || retVal == '') {
+						return;
+					}
+					alert()
+					$.ajax({
+						type : "POST",
+						url : "ajax/setpassword",
+						data : {
+							noteid : '${noteid}',
+							password : retVal
 
+						},
+						success : function(data) {
+							if (data !== "true") {
+								alert(data);
+							}
+							location.reload();
+						},
+						error : function(data) {
+							alert("Request lock fail. Please try again.")
+						}
+					});
+				}else{
+					alert('request tp emter password to confirm');	
+				}
+				
+			}
+				
+		}
+	
+		function checkUrl() {
+			return true;
+		}
+
+		function redirectLink() {
+			var url = '${contents}';
+			if (checkUrl == false) {
+				return;
+			}
+			$("#loading").show();
+			setTimeout(function() {
+				window.location.href = url;
+			}, 20000);
+		}
+	</script>
 	<script>
 		//set up for editor
 		var isFirst = true;
@@ -46,7 +104,11 @@
 		editorInit(editor);
 		//set up when document ready
 		$(document).ready(function() {
-			setInitParam('${contents}', '${type}', '${isLock}');
+			$("#loading").hide();
+			setInitParam('${contents}', '${type}', '${isLock}', '${isShortLink}');
+			if ('{isShortlink}') {
+				redirectLink();
+			}
 			
 		});
 		$.sendContentToServer = function sendContentToServer() {
@@ -62,5 +124,7 @@
 			requestUnlock('${noteid}');
 		}
 	</script>
+
+
 </body>
 </html>

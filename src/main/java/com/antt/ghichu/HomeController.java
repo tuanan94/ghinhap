@@ -56,8 +56,10 @@ public class HomeController {
 				noteDAO.addNote(curNote);
 			}
 			//Add more empty line to note
-			curNote.setContent(curNote.getContent()+emptyLines);
-			
+				//Neu khong phai shortlink thi cong them emptylines
+			if (!curNote.isShortlink()) {
+				curNote.setContent(curNote.getContent()+emptyLines);
+			}
 			
 			
 			
@@ -70,6 +72,7 @@ public class HomeController {
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
 			model.addAttribute("isLock", curNote.isLock());
+			model.addAttribute("isShortLink",curNote.isShortlink());
 			String userAgent = request.getHeader("User-Agent");
 			if (userAgent.contains("Mobile")) {
 				return "mainView_Mobile";

@@ -1,7 +1,7 @@
 /**
  * Init when start
  */
-function setInitParam(content, type, islock) {
+function setInitParam(content, type, islock, isShortLink) {
 	console.log("ready!");
 	editor.setValue(content, 1);
 	setEditorType(type);
@@ -13,6 +13,11 @@ function setInitParam(content, type, islock) {
 		$('#typeSelector').prop("disabled", true);
 	} else {
 		$('#imglock').css("visibility", "visible");
+	}
+	if (isShortLink!='true') {
+		$('#shortLinkcheckBox').removeAttr("disabled");
+	}else{
+		$('#shortLinkcheckBox').prop('checked',true);
 	}
 
 }

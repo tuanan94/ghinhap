@@ -9,6 +9,7 @@ public class Note {
 	private boolean lock;
 	private Date createddate;
 	private Date modifydate;
+	private boolean shortlink;
 	public String getNoteid() {
 		return noteid;
 	}
@@ -47,6 +48,13 @@ public class Note {
 	public void setLock(boolean lock) {
 		this.lock = lock;
 	}
+	
+	public boolean isShortlink() {
+		return shortlink;
+	}
+	public void setShortlink(boolean shortlink) {
+		this.shortlink = shortlink;
+	}
 	public Note() {
 		// TODO Auto-generated constructor stub
 	}
@@ -66,7 +74,6 @@ public class Note {
 		this.createddate = createdDate;
 		this.modifydate = ModifyDate;
 		this.lock = isLocked;
-		
 	}
 	
 	@Override
