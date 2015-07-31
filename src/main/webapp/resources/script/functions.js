@@ -3,7 +3,13 @@
  */
 function setInitParam(content, type, islock, isShortLink) {
 	console.log("ready!");
-	editor.setValue(content, 1);
+	if (isShortLink==='true') {
+		editor.setValue("Click vào nút chuyển link để đi tới trang đích ngay bây giờ.....", 1);
+		$('#buttonRedirectNow').removeAttr("hidden")
+	}else{
+		editor.setValue(content, 1);
+	}
+	
 	setEditorType(type);
 	setInputColor('green');
 	var isLock = islock;
@@ -11,15 +17,15 @@ function setInitParam(content, type, islock, isShortLink) {
 		$('#imgUnlock').css("visibility", "visible");
 		editor.setReadOnly(true);
 		$('#typeSelector').prop("disabled", true);
+		$('#shortLinkcheckBox').prop('disabled',true);
 	} else {
 		$('#imglock').css("visibility", "visible");
 		$('#shortLinkcheckBox').removeAttr("disabled");
 	}
-	alert(isShortLink);
-	if (isShortLink!='true') {
-		$('#shortLinkcheckBox').removeAttr("disabled");
-	}else{
+	if (isShortLink==='true') {
 		$('#shortLinkcheckBox').prop('checked',true);
+	}else{
+		
 	}
 
 }
@@ -69,7 +75,7 @@ function setEditorType(value) {
  * 
  */
 function requestLock(noteid) {
-	var retVal = prompt("Enter your password");
+	var retVal = prompt("Nhập mật khẩu để khóa nháp này");
 	if (retVal == null || retVal == '') {
 		return;
 	}
@@ -97,8 +103,8 @@ function requestLock(noteid) {
  * 
  */
 function requestUnlock(noteid) {
-	var retVal = prompt("Enter your password");
-	if (retVal !== '') {
+	var retVal = prompt("Nhập mật khẩu để bỏ khóa nháp này");
+	if (retVal!==null && retVal !== '') {
 		$.ajax({
 			type : "POST",
 			url : "ajax/unsetpassword",

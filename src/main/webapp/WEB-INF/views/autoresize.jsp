@@ -9,7 +9,7 @@
 <title>Ghi nháp</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
+	src="./resources/script/jquery-2.1.4.min.js"></script>
 <script src="./resources/src/ace.js"></script>
 <script type="text/javascript" src="./resources/script/setInputColor.js"></script>
 <script type="text/javascript" src="./resources/script/shortcut.js"></script>
@@ -26,7 +26,13 @@
 		<img id="imglock" onclick="lockClick()" alt="lock"
 			src="./resources/img/unlock.png" width="20px" height="20px" /> <img
 			id="imgUnlock" onclick="unLockClick()" alt="unlock"
-			src="./resources/img/lock.png" width="20px" height="20px" /> <select
+			src="./resources/img/lock.png" width="20px" height="20px" /> 
+		<!-- Short link -->
+		<input id="shortLinkcheckBox" type="checkbox" value="check-box" disabled="disabled" onchange="shortLinkCheckBoxOnchange()"/>Rút gọn link	
+			
+			
+			
+			<select
 			id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
@@ -38,11 +44,15 @@
 	</div>
 	<!-- Editor -->
 	<pre id="editor"></pre>
-	<!-- Short link -->
-	<input id="shortLinkcheckBox" type="checkbox" value="check-box" disabled="disabled" onchange="shortLinkCheckBoxOnchange()"/>Rút gọn link
+	
+	<div id="buttonRedirectNow" hidden="true">
+		<input type="button" value="Chuyển link" onclick="redirectLink()"/>
+	</div>
+	
 	<div id="loading">
 		<img alt="Loading..." src="./resources/img/loading.gif"/>
 	</div>
+	
 	
 	<!-- Short link -->
 	<script>
@@ -50,8 +60,9 @@
 			var isCheck = $('#shortLinkcheckBox').prop("checked");
 			if(isCheck){
 				if ('${isLock}'==='false') {
-					var retVal = prompt("Enter your password");
+					var retVal = prompt("Nhập mật khẩu để thực hiện rút gọn link");
 					if (retVal == null || retVal == '') {
+						$('#shortLinkcheckBox').prop('checked',false);
 						return;
 					}
 					$.ajax({
@@ -73,9 +84,26 @@
 						}
 					});
 				}else{
-					alert('request tp emter password to confirm');	
+					alert('Bạn không thể tạo short link khi ghi chú còn đang khóa. Err: 01');	
 				}
 				
+			}else{
+				$.ajax({
+					type : "POST",
+					url : "ajax/unsetShortLink",
+					data : {
+						noteid : '${noteid}'
+					},
+					success : function(data) {
+						if (data !== "true") {
+							alert(data);
+						}
+						location.reload();
+					},
+					error : function(data) {
+						alert("Request lock fail. Please try again.")
+					}
+				});
 			}
 				
 		}
@@ -85,6 +113,11 @@
 		}
 
 		function redirectLink() {
+			if('${isShortLink}'==='false'){
+				return;
+			}
+			
+			
 			var url = '${contents}';
 			if (checkUrl == false) {
 				return;
@@ -105,10 +138,6 @@
 		$(document).ready(function() {
 			$("#loading").hide();
 			setInitParam('${contents}', '${type}', '${isLock}', '${isShortLink}');
-			if ('${isShortLink}') {
-				redirectLink();
-			}
-			
 		});
 		$.sendContentToServer = function sendContentToServer() {
 			var type = document.getElementById('typeSelector').value;
