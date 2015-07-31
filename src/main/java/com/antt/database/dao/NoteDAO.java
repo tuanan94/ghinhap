@@ -10,4 +10,5 @@ public interface NoteDAO {
 	public Note findNote(String noteId);
 	public boolean editNote(Note note);
 	public boolean setLock(String Noteid, boolean isLock);
+	public boolean setShortLink(String Noteid, boolean isShortLink);
 }

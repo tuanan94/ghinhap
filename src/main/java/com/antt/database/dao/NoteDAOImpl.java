@@ -71,6 +71,15 @@ public class NoteDAOImpl implements NoteDAO {
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}
+
+	@Override
+	@Transactional
+	public boolean setShortLink(String Noteid, boolean isShortLink) {
+		Note oldNote = findNote(Noteid);
+		oldNote.setShortlink(isShortLink);
+		sessionFactory.getCurrentSession().save(oldNote);
+		return false;
+	}
 	
 	
 

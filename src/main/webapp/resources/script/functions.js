@@ -13,7 +13,9 @@ function setInitParam(content, type, islock, isShortLink) {
 		$('#typeSelector').prop("disabled", true);
 	} else {
 		$('#imglock').css("visibility", "visible");
+		$('#shortLinkcheckBox').removeAttr("disabled");
 	}
+	alert(isShortLink);
 	if (isShortLink!='true') {
 		$('#shortLinkcheckBox').removeAttr("disabled");
 	}else{

@@ -54,10 +54,9 @@
 					if (retVal == null || retVal == '') {
 						return;
 					}
-					alert()
 					$.ajax({
 						type : "POST",
-						url : "ajax/setpassword",
+						url : "ajax/setpasswordAndMakeShortLink",
 						data : {
 							noteid : '${noteid}',
 							password : retVal
@@ -106,7 +105,7 @@
 		$(document).ready(function() {
 			$("#loading").hide();
 			setInitParam('${contents}', '${type}', '${isLock}', '${isShortLink}');
-			if ('{isShortlink}') {
+			if ('${isShortLink}') {
 				redirectLink();
 			}
 			

@@ -120,6 +120,28 @@ public class HomeController {
 		return "true";
 	}
 	
+	@RequestMapping(value = "/ajax/setpasswordAndMakeShortLink", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String setPasswordAndMakeShortLink(
+			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "password", required = false) String password) {
+		if (password==null||password.equals("")) {
+			return "false";
+		}
+		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
+		if (getOldNotePass!=null&&(!getOldNotePass.getPassword().equals(""))) {
+			return "false";
+		}
+		Date date = new Date(new java.util.Date().getTime());
+		NotePass newNotePass = new NotePass(noteid, password, date);
+		notePassDAO.editNotePass(newNotePass);
+		noteDAO.setLock(noteid, true);
+		noteDAO.setShortLink(noteid, true);
+		return "true";
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "/ajax/unsetpassword", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String unSetPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
@@ -133,9 +155,22 @@ public class HomeController {
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newNotePass = new NotePass(noteid, "", date);
 		notePassDAO.editNotePass(newNotePass);
-		
 		noteDAO.setLock(noteid, false);
 		
 		return "true";
 	}
+	
+	
+	@RequestMapping(value = "/ajax/unsetShortLink", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String unSetShortLink(
+			@RequestParam(value = "noteid", required = false) String noteid) {
+		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
+		if (getOldNotePass==null||getOldNotePass.getPassword()==null||!getOldNotePass.getPassword().equals("")) {
+			return "This note is still locked. Something went wrong";
+		}
+		noteDAO.setShortLink(noteid, false);
+		return "true";
+	}
+	
+	
 }
