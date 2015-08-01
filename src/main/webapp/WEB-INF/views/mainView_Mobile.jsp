@@ -48,7 +48,7 @@ textarea {
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<textarea id="mainTextArea" onkeypress="onTextChange()" oncut="onTextChange()" onpaste="onTextChange()" class="lined" rows="200" cols="60">
+	<textarea id="mainTextArea" onkeyup="onTextChange()" oncut="onTextChange()" onpaste="onTextChange()" class="lined" rows="200" cols="60">
 </textarea>
 
 	<script>
