@@ -29,7 +29,7 @@ textarea {
 </style>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 </head>
-<body>
+<body onresize="resizetoFix()">
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
@@ -48,7 +48,7 @@ textarea {
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<textarea id="mainTextArea" onkeypress="onTextChange()"  class="lined" rows="200" cols="60">
+	<textarea id="mainTextArea" onkeyup="onTextChange()" oncut="onTextChange()" onpaste="onTextChange()" class="lined" rows="200" cols="60">
 </textarea>
 
 	<script>
@@ -101,7 +101,10 @@ textarea {
 		function unLockClick() {
 			requestUnlock('${noteid}');
 		}
-		
+		//onresize the browser window
+		function resizetoFix() {
+			$('.linedwrap').css("width","99.5%");
+		}
 	</script>
 	<script>
 	//set Editor Type
