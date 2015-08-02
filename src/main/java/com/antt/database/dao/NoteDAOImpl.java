@@ -80,6 +80,15 @@ public class NoteDAOImpl implements NoteDAO {
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}
+
+	@Override
+	@Transactional
+	public boolean setOwner(String Noteid, String ownerEmail) {
+		Note oldNote = findNote(Noteid);
+		oldNote.setOwnerEmail(ownerEmail);
+		sessionFactory.getCurrentSession().save(oldNote);
+		return false;
+	}
 	
 	
 

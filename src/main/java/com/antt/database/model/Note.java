@@ -10,6 +10,7 @@ public class Note {
 	private Date createddate;
 	private Date modifydate;
 	private boolean shortlink;
+	private String ownerEmail;
 	public String getNoteid() {
 		return noteid;
 	}
@@ -55,6 +56,14 @@ public class Note {
 	public void setShortlink(boolean shortlink) {
 		this.shortlink = shortlink;
 	}
+	
+	
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
+	}
 	public Note() {
 		// TODO Auto-generated constructor stub
 	}
@@ -67,6 +76,8 @@ public class Note {
 		this.lock = false;
 		
 	}
+	
+	
 	public Note(String noteid, String content, int type, Date createdDate, Date ModifyDate, boolean isLocked) {
 		this.noteid = noteid;
 		this.content =  content;

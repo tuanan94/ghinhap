@@ -11,4 +11,5 @@ public interface NoteDAO {
 	public boolean editNote(Note note);
 	public boolean setLock(String Noteid, boolean isLock);
 	public boolean setShortLink(String Noteid, boolean isShortLink);
+	public boolean setOwner(String Noteid, String ownerEmail);
 }

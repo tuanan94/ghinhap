@@ -123,7 +123,8 @@ public class HomeController {
 	@RequestMapping(value = "/ajax/setpasswordAndMakeShortLink", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String setPasswordAndMakeShortLink(
 			@RequestParam(value = "noteid", required = false) String noteid,
-			@RequestParam(value = "password", required = false) String password) {
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "owner", required = false) String owner) {
 		if (password==null||password.equals("")) {
 			return "false";
 		}
@@ -136,6 +137,7 @@ public class HomeController {
 		notePassDAO.editNotePass(newNotePass);
 		noteDAO.setLock(noteid, true);
 		noteDAO.setShortLink(noteid, true);
+		noteDAO.setOwner(noteid, owner);
 		return "true";
 	}
 	
