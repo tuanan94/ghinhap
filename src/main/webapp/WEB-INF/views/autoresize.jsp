@@ -195,15 +195,13 @@
 			var httpString = 'http://';
 			var httpsString = 'https://';
 			var subtring = url.substring(0, 7);
-
-			if (subtring === httpString || subtring === httpsString) {
+			var subtring2 = url.substring(0,8);
+			if (subtring === httpString || subtring2 === httpsString) {
 				//do nothing
 			} else {
 				url = httpString + url;
-				return url;
 			}
-
-			return true;
+			return url;
 		}
 
 		function redirectLink() {
