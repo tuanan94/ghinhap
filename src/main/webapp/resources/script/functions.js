@@ -8,11 +8,11 @@ function setInitParam(content, type, islock) {
 	setInputColor('green');
 	var isLock = islock;
 	if (isLock === 'true') {
-		$('#imgUnlock').css("visibility", "visible");
+		$('#imglock').remove();
 		editor.setReadOnly(true);
 		$('#typeSelector').prop("disabled", true);
 	} else {
-		$('#imglock').css("visibility", "visible");
+		$('#imgUnlock').remove();
 	}
 
 }
@@ -62,7 +62,7 @@ function setEditorType(value) {
  * 
  */
 function requestLock(noteid) {
-	var retVal = prompt("Enter your password");
+	var retVal = prompt("Nhập mật khẩu để khóa nháp này");
 	if (retVal == null || retVal == '') {
 		return;
 	}

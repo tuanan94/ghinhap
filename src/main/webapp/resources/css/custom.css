@@ -37,11 +37,11 @@
 }
 #imglock{
 	margin-left: 20px;
-	visibility: hidden;
+	
 }
 #imgUnlock{
-	margin-left: -20px;
-	visibility: hidden;
+	margin-left: 20px;
+	
 }
 
 #mainname {

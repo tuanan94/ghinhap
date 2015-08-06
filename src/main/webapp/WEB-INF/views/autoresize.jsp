@@ -14,7 +14,8 @@
 <script type="text/javascript" src="./resources/script/setInputColor.js"></script>
 <script type="text/javascript" src="./resources/script/shortcut.js"></script>
 <script type="text/javascript" src="./resources/script/functions.js"></script>
-<script type="text/javascript" src="./resources/src/ext-language_tools.js"></script>
+<script type="text/javascript"
+	src="./resources/src/ext-language_tools.js"></script>
 
 </head>
 <body>
@@ -23,10 +24,9 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="./resources/img/unlock.png" width="20px" height="20px" /> 
-		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
-		    src="./resources/img/lock.png" width="20px" height="20px" />
-		<select
+			src="./resources/img/unlock.png" width="20px" height="20px" /> <img
+			id="imgUnlock" onclick="unLockClick()" alt="unlock"
+			src="./resources/img/lock.png" width="20px" height="20px" /> <select
 			id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
@@ -47,7 +47,7 @@
 		//set up when document ready
 		$(document).ready(function() {
 			setInitParam('${contents}', '${type}', '${isLock}');
-			
+
 		});
 		$.sendContentToServer = function sendContentToServer() {
 			var type = document.getElementById('typeSelector').value;
