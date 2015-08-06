@@ -1,5 +1,6 @@
 package com.antt.database.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.antt.database.model.Note;
@@ -10,4 +11,5 @@ public interface NoteDAO {
 	public Note findNote(String noteId);
 	public boolean editNote(Note note);
 	public boolean setLock(String Noteid, boolean isLock);
+	public ArrayList<String> getLastestNotes();
 }

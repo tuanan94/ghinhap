@@ -1,9 +1,11 @@
 package com.antt.ghichu;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +38,9 @@ public class HomeController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home2(Locale locale, Model model) {
-
-		return "redirect:/public";
+		noteDAO.getLastestNotes();
+		//return "redirect:/public";
+		return "homepage_public";
 	}
 
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
@@ -135,4 +138,10 @@ public class HomeController {
 		
 		return "true";
 	}
+	@RequestMapping(value = "/ajax/getCanvasContent", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody ArrayList<String> getCanvasContent() {
+		
+		return (ArrayList<String>) noteDAO.getLastestNotes();
+	}
+	
 }

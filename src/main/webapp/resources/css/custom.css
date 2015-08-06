@@ -1,4 +1,5 @@
 @CHARSET "ISO-8859-1";
+
 .ace_editor {
 	position: relative !important;
 	border: 1px solid lightgray;
@@ -14,8 +15,6 @@
 
 #typeSelector {
 	float: right;
-	
-	
 }
 
 .input-color {
@@ -35,13 +34,13 @@
 	left: 5px;
 	top: 5px;
 }
-#imglock{
+
+#imglock {
 	margin-left: 20px;
-	
 }
-#imgUnlock{
+
+#imgUnlock {
 	margin-left: 20px;
-	
 }
 
 #mainname {
@@ -56,4 +55,10 @@
 
 #content {
 	text-align: center;
+}
+
+#myCanvasContainer {
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
 }

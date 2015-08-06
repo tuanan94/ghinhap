@@ -1,7 +1,11 @@
 package com.antt.database.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,13 +39,15 @@ public class NoteDAOImpl implements NoteDAO {
 		session.save(note);
 		return true;
 	}
+
 	@Override
 	@Transactional
-	public Note findNote(String noteId){
+	public Note findNote(String noteId) {
 		if (sessionFactory == null) {
 			return null;
 		}
-		Note note = (Note) sessionFactory.getCurrentSession().get(Note.class, noteId);
+		Note note = (Note) sessionFactory.getCurrentSession().get(Note.class,
+				noteId);
 		return note;
 	}
 
@@ -49,9 +55,9 @@ public class NoteDAOImpl implements NoteDAO {
 	@Transactional
 	public boolean editNote(Note note) {
 		Note oldNote = findNote(note.getNoteid());
-		if (oldNote==null) {
+		if (oldNote == null) {
 			System.out.println("oldNote == null");
-			return false;			
+			return false;
 		}
 		if (oldNote.isLock()) {
 			return false;
@@ -71,7 +77,26 @@ public class NoteDAOImpl implements NoteDAO {
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}
-	
-	
+
+	@Override
+	@Transactional
+	public ArrayList<String> getLastestNotes() {
+		ArrayList<Note> noteList = (ArrayList<Note>) sessionFactory
+				.getCurrentSession()
+				.createQuery("FROM Note ORDER BY modifydate DESC")
+				.setMaxResults(20).list();
+		ArrayList<String> stringNotes = new ArrayList<String>();
+		if (noteList == null) {
+			return new ArrayList<String>();
+		}
+		for (int i = 0; i < noteList.size(); i++) {
+			stringNotes.add(noteList.get(i).getNoteid());
+		}
+		System.out.println(noteList.size());
+		for (int i = 0; i < stringNotes.size(); i++) {
+			System.out.println(stringNotes.get(i));
+		}
+		return stringNotes;
+	}
 
 }
