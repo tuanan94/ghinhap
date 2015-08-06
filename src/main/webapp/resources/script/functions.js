@@ -90,8 +90,8 @@ function requestLock(noteid) {
  * 
  */
 function requestUnlock(noteid) {
-	var retVal = prompt("Enter your password");
-	if (retVal !== '') {
+	var retVal = prompt("Nhập mật khẩu để mở khóa!");
+	if (retVal !== null && retVal !== '') {
 		$.ajax({
 			type : "POST",
 			url : "ajax/unsetpassword",
