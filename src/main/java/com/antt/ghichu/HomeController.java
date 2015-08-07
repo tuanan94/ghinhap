@@ -3,6 +3,8 @@ package com.antt.ghichu;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,13 +50,19 @@ public class HomeController {
 			@PathVariable("id") String id, HttpServletRequest request) {
 		userCount++;
 		System.out.println(userCount);
-		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
+		String fixId = id.replaceAll(" ", "");
 		if (id.equals(fixId)) { // When the url is correct and dont have
 								// anychange;
-
+			
 			Note curNote = noteDAO.findNote(fixId);
 			if (curNote == null) { // neu chua co thi tao moi
 				Date date = new Date(new java.util.Date().getTime());
+				try {
+					fixId = URLEncoder.encode(fixId, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
