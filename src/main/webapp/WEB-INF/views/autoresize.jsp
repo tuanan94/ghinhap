@@ -14,6 +14,7 @@
 <script type="text/javascript" src="resources/script/setInputColor.js"></script>
 <script type="text/javascript" src="resources/script/shortcut.js"></script>
 <script type="text/javascript" src="resources/script/functions.js"></script>
+<script type="text/javascript" src="resources/script/saveFunction.js"></script>
 <script type="text/javascript"
 	src="resources/src/ext-language_tools.js"></script>
 
