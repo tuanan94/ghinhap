@@ -12,8 +12,9 @@
 	src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
-<script src="./resources/script/homepageScript.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./resources/css/homepage.css">
+<script src="./resources/script/homepageScript.js"
+	type="text/javascript"></script>
 
 
 
@@ -26,12 +27,17 @@
 			placeholder="Hãy nhập tên cho note của bạn"
 			aria-describedby="basic-addon1" maxlength="200"> <span
 			class="input-group-btn">
-			<button id="btnGo" class="btn btn-default" type="button" onclick="gotoUrl()">Go!</button>
+			<button id="btnGo" class="btn btn-default" type="button"
+				onclick="gotoUrl()">Go!</button>
 		</span>
 	</div>
-	<div id="canvas_hint" >
-		<p style="font-style: italic; color: #336699;">Các nháp không khóa được dùng gần đây...</p>
+	<div id="canvas_hint">
+		<p style="font-style: italic; color: #336699;">Các nháp không khóa
+			được dùng gần đây...</p>
 	</div>
-	
+	<a href="https://www.facebook.com/ghinhapdotcom"> <img id="fbLogo" alt="Facebook"
+		src="./resources/img/fbLogo.png" width="50px" height="50px">
+	</a>
+
 </body>
 </html>

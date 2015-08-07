@@ -29,7 +29,7 @@
 			id="imgUnlock" onclick="unLockClick()" alt="unlock"
 			src="./resources/img/lock.png" width="20px" height="20px" /> <select
 			id="typeSelector" onchange="typeChange()">
-			<option value="0">Text-default</option>
+			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
 			<option value="3">C#</option>
