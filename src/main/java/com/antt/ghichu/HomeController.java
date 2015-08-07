@@ -1,5 +1,7 @@
 package com.antt.ghichu;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -26,7 +28,9 @@ import com.antt.database.model.NotePass;
 @Controller
 public class HomeController {
 	int userCount = 0;
-	private static final String emptyLines = "\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n"+"\\n";
+	private static final String emptyLines = "\\n" + "\\n" + "\\n" + "\\n"
+			+ "\\n" + "\\n" + "\\n" + "\\n" + "\\n" + "\\n" + "\\n" + "\\n"
+			+ "\\n" + "\\n" + "\\n" + "\\n" + "\\n" + "\\n";
 	@Autowired
 	NoteDAO noteDAO;
 	@Autowired
@@ -39,32 +43,47 @@ public class HomeController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home2(Locale locale, Model model) {
 		noteDAO.getLastestNotes();
-		//return "redirect:/public";
+		// return "redirect:/public";
 		return "homepage_public";
 	}
 
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		userCount++;
 		System.out.println(userCount);
-		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
+		String fixId = id.replaceAll(" ", "");
 		if (id.equals(fixId)) { // When the url is correct and dont have
 								// anychange;
-
+			try {
+				fixId = URLEncoder.encode(fixId, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(fixId.length()>200){
+				System.out.println("ID>200");
+				fixId = fixId.substring(0, 200);
+				return "redirect:/" + fixId;
+			}
+			System.out.println(fixId.length());
 			Note curNote = noteDAO.findNote(fixId);
 			if (curNote == null) { // neu chua co thi tao moi
 				Date date = new Date(new java.util.Date().getTime());
+
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
-			//Add more empty line to note
-			curNote.setContent(curNote.getContent()+emptyLines);
-			
-			
-			
-			
-			//Add more empty line to note
+			// Add more empty line to note
+			curNote.setContent(curNote.getContent() + emptyLines);
+
+			// Add more empty line to note
 			model.addAttribute("contents",
 					curNote.getContent()
 							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
@@ -76,7 +95,7 @@ public class HomeController {
 			String userAgent = request.getHeader("User-Agent");
 
 			System.out.println(userAgent);
-			if (userAgent.contains("Mobile")||userAgent.contains("Android")) {
+			if (userAgent.contains("Mobile") || userAgent.contains("Android")) {
 				return "mainView_Mobile";
 			}
 			return "autoresize";
@@ -91,15 +110,17 @@ public class HomeController {
 			@RequestParam(value = "type", required = false) String type) {
 		String receivedContents = contents;
 		Date date = new Date(new java.util.Date().getTime());
-		while (receivedContents.length()>0 && receivedContents.charAt(receivedContents.length()-1)==10) {
-			receivedContents = receivedContents.substring(0, receivedContents.length()-1);
+		while (receivedContents.length() > 0
+				&& receivedContents.charAt(receivedContents.length() - 1) == 10) {
+			receivedContents = receivedContents.substring(0,
+					receivedContents.length() - 1);
 		}
-		for (int i = receivedContents.length()-1; i >= 0; i--) {
-//			t = receivedContents.charAt(i);
-//			System.out.println((int)t);
+		for (int i = receivedContents.length() - 1; i >= 0; i--) {
+			// t = receivedContents.charAt(i);
+			// System.out.println((int)t);
 		}
-		noteDAO.editNote(new Note(noteid, receivedContents, Integer.parseInt(type),
-				date, date));
+		noteDAO.editNote(new Note(noteid, receivedContents, Integer
+				.parseInt(type), date, date));
 		return "true";
 	}
 
@@ -107,43 +128,46 @@ public class HomeController {
 	public @ResponseBody String setPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "password", required = false) String password) {
-		if (password==null||password.equals("")) {
+		if (password == null || password.equals("")) {
 			return "false";
 		}
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
-		if (getOldNotePass!=null&&(!getOldNotePass.getPassword().equals(""))) {
+		if (getOldNotePass != null
+				&& (!getOldNotePass.getPassword().equals(""))) {
 			return "false";
 		}
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newNotePass = new NotePass(noteid, password, date);
 		notePassDAO.editNotePass(newNotePass);
 		noteDAO.setLock(noteid, true);
-		
+
 		return "true";
 	}
-	
+
 	@RequestMapping(value = "/ajax/unsetpassword", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String unSetPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "password", required = false) String password) {
-		System.out.println("Unset Password FunctionnIscalled with noteid="+noteid
-				+"password"+password);
+		System.out.println("Unset Password FunctionnIscalled with noteid="
+				+ noteid + "password" + password);
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
-		if (getOldNotePass==null||(!getOldNotePass.getPassword().equals(password))) {
+		if (getOldNotePass == null
+				|| (!getOldNotePass.getPassword().equals(password))) {
 			return "Password không đúng!";
 		}
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newNotePass = new NotePass(noteid, "", date);
 		notePassDAO.editNotePass(newNotePass);
-		
+
 		noteDAO.setLock(noteid, false);
-		
+
 		return "true";
 	}
+
 	@RequestMapping(value = "/ajax/getCanvasContent", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody ArrayList<String> getCanvasContent() {
-		
+
 		return (ArrayList<String>) noteDAO.getLastestNotes();
 	}
-	
+
 }

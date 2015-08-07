@@ -7,15 +7,15 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Ghi nháp</title>
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
+<link rel="stylesheet" type="text/css" href="resources/css/custom.css">
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="./resources/src/ace.js"></script>
-<script type="text/javascript" src="./resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="./resources/script/shortcut.js"></script>
-<script type="text/javascript" src="./resources/script/functions.js"></script>
+<script src="resources/src/ace.js"></script>
+<script type="text/javascript" src="resources/script/setInputColor.js"></script>
+<script type="text/javascript" src="resources/script/shortcut.js"></script>
+<script type="text/javascript" src="resources/script/functions.js"></script>
 <script type="text/javascript"
-	src="./resources/src/ext-language_tools.js"></script>
+	src="resources/src/ext-language_tools.js"></script>
 
 </head>
 <body>

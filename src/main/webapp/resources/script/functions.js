@@ -77,6 +77,7 @@ function requestLock(noteid) {
 		success : function(data) {
 			if (data !== "true") {
 				alert(data);
+				return;
 			}
 			location.reload();
 		},
@@ -105,6 +106,7 @@ function requestUnlock(noteid) {
 					alert(data);
 				}
 				location.reload();
+				$('#typeSelector').prop("disabled", false);
 			},
 			error : function(data) {
 				alert("set fail")
@@ -142,11 +144,16 @@ function requestUpdateContent(content, noteid, type) {
  * 
  */
 function editorInit(editor) {
+	ace.require("ace/ext/language_tools");
 	editor.setTheme("ace/theme/tomorrow");
 	editor.session.setMode("ace/mode/html");
 	editor.setOptions({
+		enableBasicAutocompletion: true,
+		enableSnippets: true,
+	    enableLiveAutocompletion: true,
 		maxLines : Infinity
 	});
+	editor.getSession().setUseWrapMode(true);
 	editor.on('input', function() {
 		if (isFirst) {
 			isFirst = false;

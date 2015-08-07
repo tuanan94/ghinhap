@@ -83,7 +83,7 @@ public class NoteDAOImpl implements NoteDAO {
 	public ArrayList<String> getLastestNotes() {
 		ArrayList<Note> noteList = (ArrayList<Note>) sessionFactory
 				.getCurrentSession()
-				.createQuery("FROM Note WHERE islock = false ORDER BY modifydate DESC")
+				.createQuery("FROM Note WHERE islock = false AND length(id) < 12 ORDER BY modifydate DESC")
 				.setMaxResults(20).list();
 		ArrayList<String> stringNotes = new ArrayList<String>();
 		if (noteList == null) {
@@ -91,10 +91,6 @@ public class NoteDAOImpl implements NoteDAO {
 		}
 		for (int i = 0; i < noteList.size(); i++) {
 			stringNotes.add(noteList.get(i).getNoteid());
-		}
-		System.out.println(noteList.size());
-		for (int i = 0; i < stringNotes.size(); i++) {
-			System.out.println(stringNotes.get(i));
 		}
 		return stringNotes;
 	}
