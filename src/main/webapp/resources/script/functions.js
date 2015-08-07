@@ -144,14 +144,14 @@ function requestUpdateContent(content, noteid, type) {
  * 
  */
 function editorInit(editor) {
-	ace.require("ace/ext/language_tools");
 	editor.setTheme("ace/theme/tomorrow");
 	editor.session.setMode("ace/mode/html");
 	editor.setOptions({
-		enableBasicAutocompletion: true,
-		enableSnippets: true,
-	    enableLiveAutocompletion: true,
-		maxLines : Infinity
+		maxLines : 4000,
+		enableBasicAutocompletion : true,
+		enableSnippets : true,
+		enableLiveAutocompletion : true
+
 	});
 	editor.getSession().setUseWrapMode(true);
 	editor.on('input', function() {

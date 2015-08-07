@@ -65,11 +65,11 @@ textarea {
 			setEditorType('${type}');
 			var isLock = '${isLock}';
 			if (isLock === 'true') {
-				$('#imgUnlock').css("visibility", "visible");
+				$('#imglock').remove();
 				$('#mainTextArea').prop("readonly", true);
 				$('#typeSelector').prop("disabled", true);
 			} else {
-				$('#imglock').css("visibility", "visible");
+				$('#imgUnlock').remove();
 			}
 
 			

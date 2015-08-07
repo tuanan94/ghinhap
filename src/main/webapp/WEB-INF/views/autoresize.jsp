@@ -12,9 +12,7 @@
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script src="resources/src/ace.js"></script>
 <script type="text/javascript" src="resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="resources/script/shortcut.js"></script>
 <script type="text/javascript" src="resources/script/functions.js"></script>
-<script type="text/javascript" src="resources/script/saveFunction.js"></script>
 <script type="text/javascript"
 	src="resources/src/ext-language_tools.js"></script>
 
@@ -48,8 +46,8 @@
 		//set up when document ready
 		$(document).ready(function() {
 			setInitParam('${contents}', '${type}', '${isLock}');
-
 		});
+		
 		$.sendContentToServer = function sendContentToServer() {
 			var type = document.getElementById('typeSelector').value;
 			requestUpdateContent(editor.getValue(), '${noteid}', type);
@@ -62,6 +60,9 @@
 		function unLockClick() {
 			requestUnlock('${noteid}');
 		}
+		
+	
+		
 	</script>
 </body>
 </html>
