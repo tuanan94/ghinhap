@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,13 @@ public class HomeController {
 		// return "redirect:/public";
 		return "homepage_public";
 	}
-
+	
+	@RequestMapping(value = { "/{id}/**" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String subHome(Locale locale, Model model,
+			@PathVariable("id") String id, HttpServletRequest request,HttpServletResponse response) {
+		return "redirect:/" + id;
+	}
+	
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
