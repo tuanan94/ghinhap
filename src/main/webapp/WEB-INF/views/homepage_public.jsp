@@ -10,6 +10,9 @@
 <script src="./resources/script/tagcanvas.min.js" type="text/javascript"></script>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="./resources/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 <script type="text/javascript">
 	window.onload = function() {
 
@@ -17,6 +20,7 @@
 	$(document).ready(function() {
 		var canvasData;
 		getCanvasData();
+		$("#urlInput").bind("keypress", {}, keypressInBox);
 	});
 
 	function getCanvasData() {
@@ -39,14 +43,13 @@
 	function buildCanvas(data) {
 		var elementString = "";
 		for (i = 0; i < canvasData.length; i++) {
-			
+
 			elementString += "'"
-					+ '<li><a href="http://www.google.com" target="_blank">'
+					+ '<li><a href="http://ghinhap.com/'+canvasData[i]+'" target="_blank">'
 					+ canvasData[i] + "</a></li>'";
 		}
-		
 
-		var htmlString = '<div id="myCanvasContainer" style="width: 300px;margin-left: auto;margin-right: auto;">'
+		var htmlString = '<div id="myCanvasContainer">'
 				+ '<canvas width="300" height="300" id="myCanvas">'
 				+ '<p>Anything in here will be replaced on browsers that support the'
 				+ '	canvas element</p>'
@@ -73,13 +76,38 @@
 			document.getElementById('myCanvasContainer').style.display = 'none';
 		}
 	}
+
+	function gotoUrl() {
+		var url = $('#urlInput').val();
+		if (url === null || url === '') {
+			return;
+		}
+		url = 'http://ghinhap.com/' + url;
+		window.location = url;
+	}
+
+	function keypressInBox(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if (code == 13) { //Enter keycode                        
+	        e.preventDefault();
+	       	$('#btnGo').click();
+	    }
+	};
 </script>
 
 
 
 </head>
 <body>
-	<div style="">
+
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1">ghinhap.com/</span>
+		<input id="urlInput" type="text" class="form-control"
+			placeholder="Hãy nhập tên cho note của bạn"
+			aria-describedby="basic-addon1" maxlength="200"> <span
+			class="input-group-btn">
+			<button id="btnGo" class="btn btn-default" type="button" onclick="gotoUrl()">Go!</button>
+		</span>
 	</div>
 </body>
 </html>

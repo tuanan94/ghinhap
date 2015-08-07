@@ -74,7 +74,9 @@ public class HomeController {
 			model.addAttribute("type", curNote.getType());
 			model.addAttribute("isLock", curNote.isLock());
 			String userAgent = request.getHeader("User-Agent");
-			if (userAgent.contains("Mobile")) {
+
+			System.out.println(userAgent);
+			if (userAgent.contains("Mobile")||userAgent.contains("Android")) {
 				return "mainView_Mobile";
 			}
 			return "autoresize";
