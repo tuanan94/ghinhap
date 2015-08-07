@@ -2,18 +2,31 @@ package com.antt.ghichu;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import com.antt.database.dao.NoteDAO;
 import com.antt.database.dao.NotePassDAO;
@@ -42,27 +55,84 @@ public class HomeController {
 		//return "redirect:/public";
 		return "homepage_public";
 	}
+	
+	@RequestMapping(value = { "/{id}/**" }, method = RequestMethod.GET)
+	public String subHome(Locale locale, Model model,
+			@PathVariable("id") String id, HttpServletRequest request) {
+		if(id.equals("resources")){
+//			String restOfTheUrl = (String) request
+//					.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+//
+//			restOfTheUrl = restOfTheUrl.replaceFirst(id + "/", "");
+//			System.out.println("restOfTheUrl: " + restOfTheUrl);
+			return "";
+		} 
+		else {
+			String URL = request.getRequestURL().toString();
+			String restOfTheUrl = (String) request
+					.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+
+			restOfTheUrl = restOfTheUrl.replaceFirst(id + "/", "");
+			String urlToRedirect = URL.replaceFirst(restOfTheUrl, "");
+			System.out.println("restOfTheUrl: " + restOfTheUrl);
+			System.out.println("urlToRedirect: " + urlToRedirect);
+			String fixId = id.replaceAll(" ", "");
+			Note curNote = noteDAO.findNote(fixId);
+			if (curNote == null) { // neu chua co thi tao moi
+				Date date = new Date(new java.util.Date().getTime());
+				try {
+					fixId = URLEncoder.encode(fixId, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				curNote = new Note(fixId, "", 0, date, date);
+				noteDAO.addNote(curNote);
+			}
+			// Add more empty line to note
+			curNote.setContent(curNote.getContent() + emptyLines);
+
+			// Add more empty line to note
+			model.addAttribute("contents",
+					curNote.getContent()
+							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
+							.replaceAll("'", "\\\\'"));
+
+			model.addAttribute("noteid", curNote.getNoteid());
+			model.addAttribute("type", curNote.getType());
+			model.addAttribute("isLock", curNote.isLock());
+			String userAgent = request.getHeader("User-Agent");
+			if (userAgent.contains("Mobile")) {
+				return "mainView_Mobile";
+			}
+			return "autoresize";
+		}
+	}
 
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
 		userCount++;
 		System.out.println(userCount);
-		String fixId = id.replaceAll("[^\\x20-\\x7e]", "").replaceAll(" ", "");
+		System.out.println("Normal ID: " + id);
+		String fixId = id.replaceAll(" ", "");
 		if (id.equals(fixId)) { // When the url is correct and dont have
 								// anychange;
-
+			
 			Note curNote = noteDAO.findNote(fixId);
 			if (curNote == null) { // neu chua co thi tao moi
 				Date date = new Date(new java.util.Date().getTime());
+				try {
+					fixId = URLEncoder.encode(fixId, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
 			//Add more empty line to note
 			curNote.setContent(curNote.getContent()+emptyLines);
-			
-			
-			
 			
 			//Add more empty line to note
 			model.addAttribute("contents",
