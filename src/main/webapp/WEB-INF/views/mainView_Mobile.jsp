@@ -76,7 +76,9 @@
 			} else {
 				$('#imgUnlock').remove();
 			}
-
+			
+			$('.linedwrap').css("width","100%");
+			$('linedtextarea').css("width","100%");
 		});
 		//set Time for Auto send function
 		function setTime(time) {
@@ -107,7 +109,12 @@
 		}
 		//onresize the browser window
 		function resizetoFix() {
-			$('.linedwrap').css("width", "99.5%");
+			var codelines = 75/$(window).width();
+			var maintext = (1 - codelines)*100;
+			var percent = maintext.toString() + "%";
+			$('.linedwrap').css("width","100%");
+			$('linedtextarea').css("width","100%");
+			$("textarea#mainTextArea").css("width",percent);
 		}
 	</script>
 	<script>
