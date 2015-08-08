@@ -15,9 +15,6 @@
 <link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/homepage.css">
 <script src="http://ghinhap.com/resources/script/homepageScript.js"
 	type="text/javascript"></script>
-
-
-
 </head>
 <body>
 

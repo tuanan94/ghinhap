@@ -40,7 +40,6 @@ function buildCanvas(data) {
 			+ '<div id="tags">'
 			+ '<ul>'
 			+ elementString
-			+ '<li><a href="http://www.google.com" target="_blank">Public</a></li>'
 			+ '</ul>' + '</div>';
 	$(htmlString).appendTo("body");
 }
