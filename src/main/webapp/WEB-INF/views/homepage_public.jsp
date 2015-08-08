@@ -7,13 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Ghi nháp - Trang chủ</title>
-<script src="./resources/script/tagcanvas.min.js" type="text/javascript"></script>
+<script src="http://ghinhap.com/resources/script/tagcanvas.min.js" type="text/javascript"></script>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="./resources/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/homepage.css">
-<script src="./resources/script/homepageScript.js"
+	href="http://ghinhap.com/resources/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/homepage.css">
+<script src="http://ghinhap.com/resources/script/homepageScript.js"
 	type="text/javascript"></script>
 
 

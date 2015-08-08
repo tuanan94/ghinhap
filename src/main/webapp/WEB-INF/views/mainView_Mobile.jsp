@@ -8,38 +8,42 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 <!--320-->
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="./resources/jquery-linedtextarea.js"></script>
-<link href="./resources/jquery-linedtextarea.css" type="text/css"
-	rel="stylesheet" />
-<script type="text/javascript" src="./resources/script/functions.js"></script>
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
+<script src="http://ghinhap.com/resources/jquery-linedtextarea.js"></script>
+<script type="text/javascript"
+	src="http://ghinhap.com/resources/script/setInputColor.js"></script>
+<link href="http://ghinhap.com/resources/jquery-linedtextarea.css"
+	type="text/css" rel="stylesheet" />
+<script type="text/javascript"
+	src="http://ghinhap.com/resources/script/functions.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="http://ghinhap.com/resources/css/custom.css">
 <style type="text/css">
-textarea {
+#mainTextArea {
 	width: 100%;
 	min-height: 100%;
 	word-wrap: break-word;
 	height: 300%;
 	font-size: 100%;
 }
-#headdiv{
+
+#headdiv {
 	height: 30px
 }
 </style>
 <link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 </head>
-<body  onresize="resizetoFix()">
+<body onresize="resizetoFix()">
 	<div id="headdiv">
 		<div class="input-color">
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
-		<img alt="" src="">
-		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="./resources/img/unlock.png" width="20px" height="20px" /> 
-		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
-		    src="./resources/img/lock.png" width="20px" height="20px" />
-		<select id="typeSelector" onchange="typeChange()">
+		<img alt="" src=""> <img id="imglock" onclick="lockClick()"
+			alt="lock" src="./resources/img/unlock.png" width="20px"
+			height="20px" /> <img id="imgUnlock" onclick="unLockClick()"
+			alt="unlock" src="./resources/img/lock.png" width="20px"
+			height="20px" /> <select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
@@ -48,14 +52,15 @@ textarea {
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<textarea id="mainTextArea" onkeyup="onTextChange()" oncut="onTextChange()" onpaste="onTextChange()" class="lined" rows="200" cols="60">
+	<textarea id="mainTextArea" onkeyup="onTextChange()"
+		oncut="onTextChange()" onpaste="onTextChange()" class="lined"
+		rows="200" cols="60">
 </textarea>
 
 	<script>
 		var intervalId;
 		$(function() {
-			$(".lined").linedtextarea({
-			});
+			$(".lined").linedtextarea({});
 		});
 	</script>
 	<script>
@@ -72,7 +77,6 @@ textarea {
 				$('#imgUnlock').remove();
 			}
 
-			
 		});
 		//set Time for Auto send function
 		function setTime(time) {
@@ -103,17 +107,15 @@ textarea {
 		}
 		//onresize the browser window
 		function resizetoFix() {
-			$('.linedwrap').css("width","99.5%");
+			$('.linedwrap').css("width", "99.5%");
 		}
 	</script>
 	<script>
-	//set Editor Type
-	function setEditorType(value) {
-		$('#typeSelector option').eq(value).prop('selected',true);
-	}
+		//set Editor Type
+		function setEditorType(value) {
+			$('#typeSelector option').eq(value).prop('selected', true);
+		}
 	</script>
-	<script type="text/javascript"
-		src="./resources/script/setInputColor.js"></script>
-	<script type="text/javascript" src="./resources/script/saveFunction.js"></script>
+
 </body>
 </html>

@@ -40,13 +40,15 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 * value={"/method1","/method1/second"}
 	 */
+	
+	
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home2(Locale locale, Model model) {
 		noteDAO.getLastestNotes();
-		// return "redirect:/public";
 		return "homepage_public";
 	}
 
+	
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
