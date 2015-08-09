@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -11,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/custom.css">
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="resources/src/ace.js"></script>
+<script src="http://ghinhap.com/resources/src/ace.js"></script>
 <script type="text/javascript" src="http://ghinhap.com/resources/script/setInputColor.js"></script>
 <script type="text/javascript" src="http://ghinhap.com/resources/script/functions.js"></script>
 <script type="text/javascript" src="http://ghinhap.com/resources/src/ext-language_tools.js"></script>
@@ -23,9 +22,9 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="./resources/img/unlock.png" width="20px" height="20px" /> <img
+			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> <img
 			id="imgUnlock" onclick="unLockClick()" alt="unlock"
-			src="./resources/img/lock.png" width="20px" height="20px" /> <select
+			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> <select
 			id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>

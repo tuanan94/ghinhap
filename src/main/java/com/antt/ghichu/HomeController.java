@@ -1,12 +1,15 @@
 package com.antt.ghichu;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.activation.URLDataSource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,15 +43,20 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 * value={"/method1","/method1/second"}
 	 */
-	
-	
+
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home2(Locale locale, Model model) {
 		noteDAO.getLastestNotes();
 		return "homepage_public";
 	}
 
-	
+//	@RequestMapping(value = { "/{id}/**" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+//	public String subHome(Locale locale, Model model,
+//			@PathVariable("id") String id, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		return "redirect:/" + id;
+//	}
+
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String home(Locale locale, Model model,
 			@PathVariable("id") String id, HttpServletRequest request) {
@@ -69,7 +77,8 @@ public class HomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(fixId.length()>200){
+			System.out.println(fixId);
+			if (fixId.length() > 200) {
 				System.out.println("ID>200");
 				fixId = fixId.substring(0, 200);
 				return "redirect:/" + fixId;

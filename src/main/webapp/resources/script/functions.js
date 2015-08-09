@@ -1,3 +1,4 @@
+var hostName = "http://localhost:8080/ghichu/";
 /**
  * Init when start
  */
@@ -68,7 +69,7 @@ function requestLock(noteid) {
 	}
 	$.ajax({
 		type : "POST",
-		url : "ajax/setpassword",
+		url : hostName+"ajax/setpassword",
 		data : {
 			noteid : noteid,
 			password : retVal
@@ -95,7 +96,7 @@ function requestUnlock(noteid) {
 	if (retVal !== null && retVal !== '') {
 		$.ajax({
 			type : "POST",
-			url : "ajax/unsetpassword",
+			url : hostName+ "ajax/unsetpassword",
 			data : {
 				noteid : noteid,
 				password : retVal
@@ -122,9 +123,10 @@ function requestUnlock(noteid) {
 function requestUpdateContent(content, noteid, type) {
 	console.log("send content to server");
 	setInputColor('orange');
+	
 	$.ajax({
 		type : "POST",
-		url : "ajax/savecontent",
+		url : hostName+"ajax/savecontent",
 		data : {
 			contents : content,
 			noteid : noteid,
