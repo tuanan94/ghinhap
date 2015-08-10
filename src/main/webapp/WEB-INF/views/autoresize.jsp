@@ -7,13 +7,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Ghi nháp</title>
 
-<link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/custom.css">
+<link rel="stylesheet" type="text/css"
+	href="http://ghinhap.com/resources/css/custom.css">
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
 <script src="http://ghinhap.com/resources/src/ace.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/functions.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/src/ext-language_tools.js"></script>
+<script type="text/javascript"
+	src="http://ghinhap.com/resources/script/setInputColor.js"></script>
+<script type="text/javascript"
+	src="http://ghinhap.com/resources/script/functions.js"></script>
+<script type="text/javascript"
+	src="http://ghinhap.com/resources/src/ext-language_tools.js"></script>
 
 </head>
 <body>
@@ -22,10 +26,11 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> <img
-			id="imgUnlock" onclick="unLockClick()" alt="unlock"
-			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> <select
-			id="typeSelector" onchange="typeChange()">
+			src="http://ghinhap.com/resources/img/unlock.png" width="20px"
+			height="20px" /> <img id="imgUnlock" onclick="unLockClick()"
+			alt="unlock" src="http://ghinhap.com/resources/img/lock.png"
+			width="20px" height="20px" /> <select id="typeSelector"
+			onchange="typeChange()">
 			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>

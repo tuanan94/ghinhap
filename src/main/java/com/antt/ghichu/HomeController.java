@@ -50,12 +50,12 @@ public class HomeController {
 		return "homepage_public";
 	}
 
-//	@RequestMapping(value = { "/{id}/**" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-//	public String subHome(Locale locale, Model model,
-//			@PathVariable("id") String id, HttpServletRequest request,
-//			HttpServletResponse response) {
-//		return "redirect:/" + id;
-//	}
+	@RequestMapping(value = { "/{id}/**" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	public String subHome(Locale locale, Model model,
+			@PathVariable("id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		return "redirect:/" + id;
+	}
 
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String home(Locale locale, Model model,

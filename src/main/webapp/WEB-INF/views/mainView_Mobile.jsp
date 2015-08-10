@@ -32,7 +32,7 @@
 	height: 30px
 }
 </style>
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
+<link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/custom.css">
 </head>
 <body onresize="resizetoFix()">
 	<div id="headdiv">
@@ -40,9 +40,9 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img alt="" src=""> <img id="imglock" onclick="lockClick()"
-			alt="lock" src="./resources/img/unlock.png" width="20px"
+			alt="lock" src="http://ghinhap.com/resources/img/unlock.png" width="20px"
 			height="20px" /> <img id="imgUnlock" onclick="unLockClick()"
-			alt="unlock" src="./resources/img/lock.png" width="20px"
+			alt="unlock" src="http://ghinhap.com/resources/img/lock.png" width="20px"
 			height="20px" /> <select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
