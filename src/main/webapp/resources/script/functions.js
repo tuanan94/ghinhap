@@ -1,4 +1,4 @@
-var hostName = "http://ghinhap.com/";
+var hostName = "http://localhost:8080/ghichu/";
 /**
  * Init when start
  */
