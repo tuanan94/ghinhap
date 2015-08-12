@@ -1,19 +1,11 @@
 @CHARSET "ISO-8859-1";
+
 .ace_editor {
 	position: relative !important;
 	border: 1px solid lightgray;
 	margin: auto;
 	height: 200px;
 	width: 100%;
-	margin-top: -10px;
-}
-
-.ace-tomorrow .ace_gutter {
-	background: #E3FFD1 !important;
-}
-
-.ace_content {
-	background: #FFFDEB !important;
 }
 
 .scrollmargin {
@@ -23,8 +15,6 @@
 
 #typeSelector {
 	float: right;
-	
-	
 }
 
 .input-color {
@@ -36,23 +26,21 @@
 }
 
 .input-color .color-box {
-	width: 20px;
-	height: 20px;
+	width: 10px;
+	height: 10px;
 	display: inline-block;
 	background-color: #ccc;
 	position: absolute;
 	left: 5px;
-	top: 10px;
-	border-radius: 10px;
+	top: 5px;
 }
-#imglock{
-	margin-top: 10px;
-	margin-left: 40px;
-	visibility: hidden;
+
+#imglock {
+	margin-left: 20px;
 }
-#imgUnlock{
-	margin-left: -20px;
-	visibility: hidden;
+
+#imgUnlock {
+	margin-left: 20px;
 }
 
 #mainname {
@@ -60,7 +48,7 @@
 	overflow: hidden;
 }
 
-#headdiv {
+#headdiv {	
 	position: relative;
 	width: 100%;
 	background: #B2DFEE;
@@ -70,8 +58,4 @@
 
 #content {
 	text-align: center;
-}
-#buttonRedirectNow{
-	text-align: center;
-	width: 100%;
 }
