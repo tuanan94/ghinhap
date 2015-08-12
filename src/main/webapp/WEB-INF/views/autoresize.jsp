@@ -56,6 +56,19 @@
 		border-radius: 0 0 5px 5px;
 	}
 	.select_wrapper .select_inner li:first-child { border-radius: 5px 5px 0 0; }
+	#headdiv {
+		position: relative;
+		width: inherit;
+		background: #B2DFEE;
+		padding: 15px 45px 40px;
+		border-radius: 10px;	
+		margin-bottom: -10px;}
+	.ace-tomorrow .ace_gutter {
+		background: #E3FFD1 !important;
+	}
+	.ace_content {
+		background: #FFFDEB !important;
+	}
 </style>
 </head>
 <body>

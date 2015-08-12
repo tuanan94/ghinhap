@@ -48,12 +48,9 @@
 	overflow: hidden;
 }
 
-#headdiv {	
+#headdiv {
 	position: relative;
-	width: 100%;
-	background: #B2DFEE;
-	padding: 15px 45px 30px;
-	border-radius: 10px;
+	width: 100%	
 }
 
 #content {
