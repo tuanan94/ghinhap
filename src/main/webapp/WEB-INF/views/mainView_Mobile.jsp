@@ -10,15 +10,15 @@
 <!--320-->
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="http://ghinhap.com/resources/jquery-linedtextarea.js"></script>
+<script src="./resources/jquery-linedtextarea.js"></script>
 <script type="text/javascript"
-	src="http://ghinhap.com/resources/script/setInputColor.js"></script>
-<link href="http://ghinhap.com/resources/jquery-linedtextarea.css"
+	src="./resources/script/setInputColor.js"></script>
+<link href="./resources/jquery-linedtextarea.css"
 	type="text/css" rel="stylesheet" />
 <script type="text/javascript"
-	src="http://ghinhap.com/resources/script/functions.js"></script>
+	src="./resources/script/functions.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="http://ghinhap.com/resources/css/custom.css">
+	href="./resources/css/custom.css">
 <style type="text/css">
 #mainTextArea {
 	width: 100%;
@@ -41,9 +41,21 @@
 		</div>
 		<img alt="" src=""> <img id="imglock" onclick="lockClick()"
 			alt="lock" src="./resources/img/unlock.png" width="20px"
-			height="20px" /> <img id="imgUnlock" onclick="unLockClick()"
+			height="20px"
+			<c:choose>
+			<c:when test="${isLock == 'true'}"> style="visibility: hidden;"</c:when>
+			<c:when test="${isLock == 'false'}"> style="visibility: visible;"</c:when> 
+			</c:choose>
+			/> 
+		<img id="imgUnlock" onclick="unLockClick()"
 			alt="unlock" src="./resources/img/lock.png" width="20px"
-			height="20px" /> <select id="typeSelector" onchange="typeChange()">
+			height="20px" 
+			<c:choose>
+			<c:when test="${isLock == 'true'}"> style="visibility: visible;"</c:when>
+			<c:when test="${isLock == 'false'}"> style="visibility: hidden;"</c:when> 
+			</c:choose>
+			/> 
+		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
