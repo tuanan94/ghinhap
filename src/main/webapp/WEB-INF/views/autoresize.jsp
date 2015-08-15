@@ -7,12 +7,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Ghi nháp</title>
 
-<link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/custom.css">
+<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script src="http://ghinhap.com/resources/src/ace.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/functions.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/src/ext-language_tools.js"></script>
+<script src="./resources/src/ace.js"></script>
+<script type="text/javascript" src="./resources/script/setInputColor.js"></script>
+<script type="text/javascript" src="./resources/script/functions.js"></script>
+<script type="text/javascript" src="./resources/src/ext-language_tools.js"></script>
 <style type="text/css">	
 	.select_wrapper {
 		background: #87CEFA url("./resources/img/arrow.png") no-repeat top 15px right 12px;
@@ -20,7 +20,7 @@
 		border-radius: 3px;
 		cursor: pointer;
 		position: relative;
-		width: 20%;
+		width: 145px;
 		float: right;
 		color: #fff;
 		font-weight: bold;
@@ -69,6 +69,11 @@
 	.ace_content {
 		background: #FFFDEB !important;
 	}
+	#headdiv{
+		padding: 10px 10px 25px;
+		margin: 0px;
+		border-radius: 0px;
+	}
 </style>
 </head>
 <body>
@@ -89,7 +94,7 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<pre id="editor"></pre>
+	<pre id="editor" onpaste="saveImediately()" oncut="saveImediately()"></pre>
 
 	<script>
 		//set up for editor
@@ -113,6 +118,25 @@
 		}
 		function unLockClick() {
 			requestUnlock('${noteid}');
+		}
+		function saveImediately() {
+			var type = document.getElementById('typeSelector').value;
+			$.ajax({
+				type : "POST",
+				url : hostName+"ajax/savecontent",
+				data : {
+					contents : editor.getValue(),
+					noteid : '${noteid}',
+					type : type
+
+				},
+				success : function(data) {
+					setInputColor('green');
+				},
+				error : function(data) {
+					setInputColor('red');
+				}
+			});
 		}
 	</script>
 	<script type="text/javascript">

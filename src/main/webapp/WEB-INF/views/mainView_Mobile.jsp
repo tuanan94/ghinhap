@@ -94,7 +94,7 @@
 		</select>
 	</div>
 	<textarea id="mainTextArea" class="lined" rows="200" cols="60"
-		onkeyup="onTextChange()" oncut="onTextChange()" onpaste="onTextChange()">
+		onkeyup="onTextChange()" oncut="saveImmediately()" onpaste="saveImmediately()">
 	</textarea>			
 	<script>
 		var intervalId;
@@ -155,6 +155,26 @@
 			$('.linedwrap').css("width","100%");
 			$('linedtextarea').css("width","100%");
 			$("textarea#mainTextArea").css("width",percent);
+		}
+		//save immediately
+		function saveImmediately() {
+			var type = document.getElementById('typeSelector').value;
+			$.ajax({
+				type : "POST",
+				url : hostName+"ajax/savecontent",
+				data : {
+					contents : editor.getValue(),
+					noteid : '${noteid}',
+					type : type
+
+				},
+				success : function(data) {
+					setInputColor('green');
+				},
+				error : function(data) {
+					setInputColor('red');
+				}
+			});
 		}
 	</script>	
 	<script>
