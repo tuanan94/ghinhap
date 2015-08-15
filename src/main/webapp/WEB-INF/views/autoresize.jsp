@@ -7,13 +7,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Ghi nháp</title>
 
-<link rel="stylesheet" type="text/css" href="http://ghinhap.com/resources/css/custom.css">
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="http://ghinhap.com/resources/src/ace.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/setInputColor.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/script/functions.js"></script>
-<script type="text/javascript" src="http://ghinhap.com/resources/src/ext-language_tools.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/ghichu/resources/css/custom.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://localhost:8080/ghichu/resources/src/ace.js"></script>
+<script type="text/javascript" src="http://localhost:8080/ghichu/resources/script/setInputColor.js"></script>
+<script type="text/javascript" src="http://localhost:8080/ghichu/resources/script/saveFunction.js"></script>
+<script type="text/javascript" src="http://localhost:8080/ghichu/resources/script/functions.js"></script>
+<script type="text/javascript" src="http://localhost:8080/ghichu/resources/src/ext-language_tools.js"></script>
 
 </head>
 <body>
@@ -34,7 +34,7 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<pre id="editor"></pre>
+	<pre id="editor" onpaste="saveImediately()" oncut="saveImediately()"></pre>
 
 	<script>
 		//set up for editor
@@ -58,6 +58,25 @@
 		}
 		function unLockClick() {
 			requestUnlock('${noteid}');
+		}
+		function saveImediately() {
+			var type = document.getElementById('typeSelector').value;
+			$.ajax({
+				type : "POST",
+				url : hostName+"ajax/savecontent",
+				data : {
+					contents : editor.getValue(),
+					noteid : '${noteid}',
+					type : type
+
+				},
+				success : function(data) {
+					setInputColor('green');
+				},
+				error : function(data) {
+					setInputColor('red');
+				}
+			});
 		}
 	</script>
 </body>
