@@ -69,11 +69,6 @@
 	.ace_content {
 		background: #FFFDEB !important;
 	}
-	#headdiv{
-		padding: 10px 10px 25px;
-		margin: 0px;
-		border-radius: 0px;
-	}
 </style>
 </head>
 <body>
@@ -82,9 +77,13 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> <img
+			src="./resources/img/unlock.png" width="20px" height="20px" /> 
+		<img
 			id="imgUnlock" onclick="unLockClick()" alt="unlock"
-			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> 
+			src="./resources/img/lock.png" width="20px" height="20px" /> 
+		<img
+			id="imgEdit" onclick="toEdit()" alt="edit"
+			src="./resources/img/edit-icon.png" width="20px" height="20px" />
 		<select id="typeSelector">
 			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>
@@ -116,8 +115,11 @@
 		function lockClick() {
 			requestLock('${noteid}');
 		}
-		function unLockClick() {
+		function unLockClick() {			
 			requestUnlock('${noteid}');
+		}
+		function toEdit() {
+			requestToEdit('${noteid}');
 		}
 		function saveImediately() {
 			var type = document.getElementById('typeSelector').value;

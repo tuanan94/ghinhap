@@ -72,6 +72,11 @@
 		border-radius: 0 0 5px 5px;
 	}
 	.select_wrapper .select_inner li:first-child { border-radius: 5px 5px 0 0; }
+	#headdiv{
+		padding: 10px 10px 25px;
+		margin: 0px;
+		border-radius: 0px;
+	}
 </style>
 </head>
 <body onresize="resizetoFix()">

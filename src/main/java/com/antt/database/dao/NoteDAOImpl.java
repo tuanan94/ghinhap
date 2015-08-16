@@ -59,9 +59,10 @@ public class NoteDAOImpl implements NoteDAO {
 			System.out.println("oldNote == null");
 			return false;
 		}
+		/*
 		if (oldNote.isLock()) {
 			return false;
-		}
+		}*/
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());
 		oldNote.setModifydate(new Date(new java.util.Date().getTime()));
