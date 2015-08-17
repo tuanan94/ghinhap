@@ -186,6 +186,8 @@ public class HomeController {
 				|| (!getNotePass.getPassword().equals(password))) {
 			return "Password không đúng!";
 		}
+		Date date = new Date(new java.util.Date().getTime());
+		NotePass newUpdate = new NotePass(noteid, password, date);
 
 		return "true";
 	}
