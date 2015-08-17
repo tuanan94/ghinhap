@@ -159,7 +159,7 @@ public class HomeController {
 	public @ResponseBody String unSetPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "password", required = false) String password) {
-		System.out.println("Unset Password FunctionnIscalled with noteid="
+		System.out.println("Unset Password Function Is called with noteid="
 				+ noteid + "password" + password);
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
 		if (getOldNotePass == null
@@ -171,6 +171,23 @@ public class HomeController {
 		notePassDAO.editNotePass(newNotePass);
 
 		noteDAO.setLock(noteid, false);
+
+		return "true";
+	}
+	
+	@RequestMapping(value = "/ajax/toedit", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String toEdit(
+			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "password", required = false) String password) {
+		System.out.println("To Edit FunctionnIscalled with noteid="
+				+ noteid + "password" + password);
+		NotePass getNotePass = notePassDAO.findNotePass(noteid);
+		if (getNotePass == null
+				|| (!getNotePass.getPassword().equals(password))) {
+			return "Password không đúng!";
+		}
+		Date date = new Date(new java.util.Date().getTime());
+		NotePass newUpdate = new NotePass(noteid, password, date);
 
 		return "true";
 	}

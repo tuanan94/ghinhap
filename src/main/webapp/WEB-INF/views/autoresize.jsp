@@ -22,10 +22,11 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img id="imglock" onclick="lockClick()" alt="lock"
-			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> <img
-			id="imgUnlock" onclick="unLockClick()" alt="unlock"
-			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> <select
-			id="typeSelector" onchange="typeChange()">
+			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> 
+		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
+			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> 
+		
+		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>
 			<option value="2">Java</option>
@@ -34,7 +35,7 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<pre id="editor" onpaste="saveImediately()" oncut="saveImediately()"></pre>
+	<pre id="editor" onpaste="saveImmediately()" oncut="saveImmediately()"></pre>
 
 	<script>
 		//set up for editor
@@ -59,7 +60,10 @@
 		function unLockClick() {
 			requestUnlock('${noteid}');
 		}
-		function saveImediately() {
+		function toEdit() {
+			requestToEdit('${noteid}');
+		}
+		function saveImmediately() {
 			var type = document.getElementById('typeSelector').value;
 			$.ajax({
 				type : "POST",

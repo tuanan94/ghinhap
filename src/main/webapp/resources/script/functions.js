@@ -10,10 +10,12 @@ function setInitParam(content, type, islock) {
 	var isLock = islock;
 	if (isLock === 'true') {
 		$('#imglock').remove();
+		$('#imgEdit').show();
 		editor.setReadOnly(true);
 		$('#typeSelector').prop("disabled", true);
 	} else {
 		$('#imgUnlock').remove();
+		$('#imgEdit').remove();
 	}
 
 }
@@ -37,7 +39,6 @@ function setEditorType(value) {
 	switch (value) {
 	case '0':
 		editor.session.setMode("ace/mode/text");
-
 		break;
 	case '1':
 		editor.session.setMode("ace/mode/html");
@@ -107,7 +108,7 @@ function requestUnlock(noteid) {
 					alert(data);
 				}
 				location.reload();
-				$('#typeSelector').prop("disabled", false);
+				$('#typeSelector').prop("disabled", false);				
 			},
 			error : function(data) {
 				alert("set fail")
@@ -117,7 +118,37 @@ function requestUnlock(noteid) {
 }
 
 /**
- * Request update conten
+ * Request to edit content when locking
+ * 
+ */
+function requestToEdit(noteid) {
+	var retVal = prompt("Nhập mật khẩu để có quyền tùy chỉnh nội dung!");
+	if (retVal !== null && retVal !== '') {
+		$.ajax({
+			type : "POST",
+			url : hostName+ "ajax/toedit",
+			data : {
+				noteid : noteid,
+				password : retVal
+
+			},
+			success : function(data) {
+				if (data !== "true") {
+					alert(data);
+				}
+				//location.reload();
+				$('#typeSelector').prop("disabled", false);
+				editor.setReadOnly(false);
+			},
+			error : function(data) {
+				alert("edit fail")
+			}
+		});
+	}
+}
+
+/**
+ * Request update content
  * 
  */
 function requestUpdateContent(content, noteid, type) {
@@ -131,7 +162,6 @@ function requestUpdateContent(content, noteid, type) {
 			contents : content,
 			noteid : noteid,
 			type : type
-
 		},
 		success : function(data) {
 			setInputColor('green');
@@ -165,7 +195,6 @@ function editorInit(editor) {
 		window.clearInterval(intervalId);
 		intervalId = (setTime(3000));
 	});
-
 }
 
 /**
