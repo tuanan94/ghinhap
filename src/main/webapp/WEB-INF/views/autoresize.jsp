@@ -25,7 +25,8 @@
 			src="http://ghinhap.com/resources/img/unlock.png" width="20px" height="20px" /> 
 		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
 			src="http://ghinhap.com/resources/img/lock.png" width="20px" height="20px" /> 
-		
+		<img id="imgEdit" onclick="toEdit()" alt="edit"
+			src="./resources/img/edit-icon.png" width="20px" height="20px" />
 		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-mặc định</option>
 			<option value="1">HTML</option>
