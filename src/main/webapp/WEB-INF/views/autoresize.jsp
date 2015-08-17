@@ -34,7 +34,7 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<pre id="editor" onpaste="saveImediately()" oncut="saveImediately()"></pre>
+	<pre id="editor" onpaste="saveImmediately()" oncut="saveImmediately()"></pre>
 
 	<script>
 		//set up for editor
@@ -59,7 +59,7 @@
 		function unLockClick() {
 			requestUnlock('${noteid}');
 		}
-		function saveImediately() {
+		function saveImmediately() {
 			var type = document.getElementById('typeSelector').value;
 			$.ajax({
 				type : "POST",
