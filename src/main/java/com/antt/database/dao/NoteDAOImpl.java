@@ -2,18 +2,14 @@ package com.antt.database.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.antt.database.model.Note;
-import com.sun.xml.internal.bind.v2.model.core.ID;
+
 
 public class NoteDAOImpl implements NoteDAO {
 	private SessionFactory sessionFactory;
@@ -53,16 +49,17 @@ public class NoteDAOImpl implements NoteDAO {
 
 	@Override
 	@Transactional
-	public boolean editNote(Note note) {
-		Note oldNote = findNote(note.getNoteid());
+	public boolean editNote(Note note, String editing) {		
+		Note oldNote = findNote(note.getNoteid());		
 		if (oldNote == null) {
 			System.out.println("oldNote == null");
 			return false;
 		}
-		/*
+		
 		if (oldNote.isLock()) {
-			return false;
-		}*/
+			if(editing != "true")
+				return false;
+		}
 		
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());

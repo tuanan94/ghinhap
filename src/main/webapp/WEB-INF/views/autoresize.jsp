@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*" session="true"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -47,6 +48,8 @@
 		//set up when document ready
 		$(document).ready(function() {
 			setInitParam('${contents}', '${type}', '${isLock}');
+			
+			<%session.setAttribute("editing", "false");%>
 		});
 
 		$.sendContentToServer = function sendContentToServer() {
@@ -60,9 +63,10 @@
 		}
 		function unLockClick() {
 			requestUnlock('${noteid}');
+			
 		}
 		function toEdit() {
-			requestToEdit('${noteid}');
+			requestToEdit('${noteid}');								
 		}
 		function saveImmediately() {
 			var type = document.getElementById('typeSelector').value;

@@ -9,7 +9,7 @@ public interface NoteDAO {
 	public List<Note> list();
 	public boolean addNote(Note note);
 	public Note findNote(String noteId);
-	public boolean editNote(Note note);
+	public boolean editNote(Note note, String editing);
 	public boolean setLock(String Noteid, boolean isLock);
 	public ArrayList<String> getLastestNotes();
 }

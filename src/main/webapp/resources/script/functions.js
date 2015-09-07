@@ -135,13 +135,16 @@ function requestToEdit(noteid) {
 			success : function(data) {
 				if (data !== "true") {
 					alert(data);
+					return false;
 				}
 				//location.reload();
 				$('#typeSelector').prop("disabled", false);
 				editor.setReadOnly(false);
+				return true;
 			},
 			error : function(data) {
 				alert("edit fail")
+				return false;
 			}
 		});
 	}

@@ -9,7 +9,8 @@ import java.util.Locale;
 
 import javax.activation.URLDataSource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,7 +119,8 @@ public class HomeController {
 	public @ResponseBody String getList(
 			@RequestParam(value = "contents", required = false) String contents,
 			@RequestParam(value = "noteid", required = false) String noteid,
-			@RequestParam(value = "type", required = false) String type) {
+			@RequestParam(value = "type", required = false) String type,
+			HttpServletRequest request) {
 		String receivedContents = contents;
 		Date date = new Date(new java.util.Date().getTime());
 		while (receivedContents.length() > 0
@@ -130,8 +132,12 @@ public class HomeController {
 			// t = receivedContents.charAt(i);
 			// System.out.println((int)t);
 		}
+		
+		HttpSession session = request.getSession();
+		String editing = (String)session.getAttribute("editing");
+		
 		noteDAO.editNote(new Note(noteid, receivedContents, Integer
-				.parseInt(type), date, date));
+				.parseInt(type), date, date), editing);
 		return "true";
 	}
 
@@ -178,17 +184,26 @@ public class HomeController {
 	@RequestMapping(value = "/ajax/toedit", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String toEdit(
 			@RequestParam(value = "noteid", required = false) String noteid,
-			@RequestParam(value = "password", required = false) String password) {
+			@RequestParam(value = "password", required = false) String password,
+			HttpServletRequest request) {
 		System.out.println("To Edit FunctionnIscalled with noteid="
 				+ noteid + "password" + password);
 		NotePass getNotePass = notePassDAO.findNotePass(noteid);
+		
+		HttpSession session = request.getSession();		
+		
 		if (getNotePass == null
 				|| (!getNotePass.getPassword().equals(password))) {
+			
+			session.setAttribute("editing", "false");
+			
 			return "Password không đúng!";
 		}
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newUpdate = new NotePass(noteid, password, date);
-
+		
+		session.setAttribute("editing", "true");
+		
 		return "true";
 	}
 
