@@ -10,15 +10,15 @@
 <!--320-->
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-<script src="./resources/jquery-linedtextarea.js"></script>
-<script type="text/javascript"
-	src="./resources/script/setInputColor.js"></script>
-<link href="./resources/jquery-linedtextarea.css"
+	
+	 
+<script src="<c:url value="/resources/jquery-linedtextarea.js"/>" ></script>
+<link href="<c:url value="/resources/jquery-linedtextarea.css"/>" 
 	type="text/css" rel="stylesheet" />
 <script type="text/javascript"
-	src="./resources/script/functions.js"></script>
+	src="<c:url value="/resources/script/functions.js"/>"></script>
 <link rel="stylesheet" type="text/css"
-	href="./resources/css/custom.css">
+	href="<c:url value="/resources/css/custom.css"/>">
 <style type="text/css">
 #mainTextArea {
 	width: 100%;
@@ -32,7 +32,6 @@
 	height: 30px
 }
 </style>
-<link rel="stylesheet" type="text/css" href="./resources/css/custom.css">
 </head>
 <body onresize="resizetoFix()">
 	<div id="headdiv">
@@ -40,7 +39,7 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img alt="" src=""> <img id="imglock" onclick="lockClick()"
-			alt="lock" src="./resources/img/unlock.png" width="20px"
+			alt="lock" src="<c:url value="/resources/img/unlock.png"/>" width="20px"
 			height="20px"
 			<c:choose>
 			<c:when test="${isLock == 'true'}"> style="visibility: hidden;"</c:when>
@@ -48,7 +47,7 @@
 			</c:choose>
 			/> 
 		<img id="imgUnlock" onclick="unLockClick()"
-			alt="unlock" src="./resources/img/lock.png" width="20px"
+			alt="unlock" src="<c:url value="/resources/img/lock.png"/>" width="20px"
 			height="20px" 
 			<c:choose>
 			<c:when test="${isLock == 'true'}"> style="visibility: visible;"</c:when>

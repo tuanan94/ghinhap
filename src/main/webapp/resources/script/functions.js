@@ -1,9 +1,10 @@
-var hostName = "http://localhost:8080/ghichu/";
+//var hostName = "http://localhost:8080/ghichu/";
+var hostName= location.protocol + '//' + location.host + "/ghichu/";
 /**
  * Init when start
  */
 function setInitParam(content, type, islock) {
-	console.log("ready!");
+	console.log("ready!" + hostName);
 	editor.setValue(content, 1);
 	setEditorType(type);
 	setInputColor('green');
@@ -82,8 +83,8 @@ function requestLock(noteid) {
 			}
 			location.reload();
 		},
-		error : function(data) {
-			alert("Request lock fail. Please try again.")
+		error : function(xhr, textStatus, error) {
+			alert("Request lock fail, please try again!")
 		}
 	});
 }
