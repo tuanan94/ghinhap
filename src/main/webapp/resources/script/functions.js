@@ -69,7 +69,7 @@ function requestLock(noteid) {
 	}
 	$.ajax({
 		type : "POST",
-		url : hostName+"ajax/setpassword",
+		url : hostName + "ajax/setpassword",
 		data : {
 			noteid : noteid,
 			password : retVal
@@ -96,7 +96,7 @@ function requestUnlock(noteid) {
 	if (retVal !== null && retVal !== '') {
 		$.ajax({
 			type : "POST",
-			url : hostName+ "ajax/unsetpassword",
+			url : hostName + "ajax/unsetpassword",
 			data : {
 				noteid : noteid,
 				password : retVal
@@ -123,10 +123,10 @@ function requestUnlock(noteid) {
 function requestUpdateContent(content, noteid, type) {
 	console.log("send content to server");
 	setInputColor('orange');
-	
+
 	$.ajax({
 		type : "POST",
-		url : hostName+"ajax/savecontent",
+		url : hostName + "ajax/savecontent",
 		data : {
 			contents : content,
 			noteid : noteid,
@@ -174,4 +174,25 @@ function editorInit(editor) {
  */
 function setTime(time) {
 	return window.setInterval($.sendContentToServer, time);
+}
+
+/**
+ * 
+ */
+// set Input Color
+function setInputColor(color) {
+	switch (color) {
+	case 'green':
+		var colorBox = document.querySelector(".color-box");
+		colorBox.style.background = '#00CC00';
+		break;
+	case 'red':
+		var colorBox = document.querySelector(".color-box");
+		colorBox.style.background = '#FF0000';
+		break;
+	case 'orange':
+		var colorBox = document.querySelector(".color-box");
+		colorBox.style.background = '#FF9900';
+		break;
+	}
 }
