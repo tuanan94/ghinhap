@@ -76,6 +76,47 @@
 	</script>
 	<script>
 		$(document).ready(function() {
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(document.location.search.substring(1)),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+			        }
+			    }
+			};
+			if(/iPad|iPhone|iPod/.test(navigator.platform)){
+				var param = getUrlParameter('onApp');
+				if(param == null){
+					document.location = 'ghinhap://?' + '${noteid}';
+					var clickedAt = +new Date;
+					  setTimeout( function()
+					  {
+						  if (+new Date - clickedAt < 500){
+							  var mess;
+							  var language = window.navigator.userLanguage || window.navigator.language;
+								if(language == "vi-vn"){
+									mess = "Tải ứng dụng Ghi Nháp trên iOS?";
+								} else {
+									mess = "Download Ghi Nháp application on iOS?";
+								}
+						      if(confirm(mess))
+						      {
+									if(language == "vi-vn"){
+										document.location = 'https://itunes.apple.com/vn/app/ghi-nhap/id1033925258?mt=8';
+									} else {
+										document.location = 'https://itunes.apple.com/us/app/ghi-nhap/id1033925258?mt=8';
+									}
+						      }
+						  }
+					  }, 500);
+				}
+			}
 			$("#mainTextArea").val('${contents}');
 			setInputColor('green');
 			setEditorType('${type}');
