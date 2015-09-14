@@ -10,10 +10,10 @@
 <!--320-->
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery.min.js"></script>
-	
-	 
-<script src="<c:url value="/resources/jquery-linedtextarea.js"/>" ></script>
-<link href="<c:url value="/resources/jquery-linedtextarea.css"/>" 
+
+
+<script src="<c:url value="/resources/jquery-linedtextarea.js"/>"></script>
+<link href="<c:url value="/resources/jquery-linedtextarea.css"/>"
 	type="text/css" rel="stylesheet" />
 <script type="text/javascript"
 	src="<c:url value="/resources/script/functions.js"/>"></script>
@@ -39,21 +39,19 @@
 			<div class="color-box" style="background-color: #FF850A;"></div>
 		</div>
 		<img alt="" src=""> <img id="imglock" onclick="lockClick()"
-			alt="lock" src="<c:url value="/resources/img/unlock.png"/>" width="20px"
-			height="20px"
+			alt="lock" src="<c:url value="/resources/img/unlock.png"/>"
+			width="20px" height="20px"
 			<c:choose>
 			<c:when test="${isLock == 'true'}"> style="visibility: hidden;"</c:when>
 			<c:when test="${isLock == 'false'}"> style="visibility: visible;"</c:when> 
-			</c:choose>
-			/> 
-		<img id="imgUnlock" onclick="unLockClick()"
-			alt="unlock" src="<c:url value="/resources/img/lock.png"/>" width="20px"
-			height="20px" 
+			</c:choose> />
+		<img id="imgUnlock" onclick="unLockClick()" alt="unlock"
+			src="<c:url value="/resources/img/lock.png"/>" width="20px"
+			height="20px"
 			<c:choose>
 			<c:when test="${isLock == 'true'}"> style="visibility: visible;"</c:when>
 			<c:when test="${isLock == 'false'}"> style="visibility: hidden;"</c:when> 
-			</c:choose>
-			/> 
+			</c:choose> />
 		<select id="typeSelector" onchange="typeChange()">
 			<option value="0">Text-default</option>
 			<option value="1">HTML</option>
@@ -63,10 +61,57 @@
 			<option value="5">Javascript</option>
 		</select>
 	</div>
-	<textarea id="mainTextArea" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeyup="onTextChange()"
+	<textarea id="mainTextArea" autocomplete="off" autocorrect="off"
+		autocapitalize="off" spellcheck="false" onkeyup="onTextChange()"
 		oncut="onTextChange()" onpaste="onTextChange()" class="lined"
 		rows="200" cols="60">
 </textarea>
+
+	<script type="text/javascript">
+	 window.onload = function() {
+		 var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(document.location.search.substring(1)),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+			        }
+			    }
+			};
+
+			if(!(/iPad|iPhone|iPod/.test(navigator.platform))){
+				return;
+			}
+			var param = getUrlParameter('onApp');
+			if(param != null){
+				return;
+			}
+			
+			document.getElementById("l").src = "ghinhap://?" + "${noteid}";
+
+			setTimeout(
+					function() {
+						var mess;
+						var language = window.navigator.userLanguage
+								|| window.navigator.language;
+						if (language == "vi-vn") {
+							mess = "Tải ứng dụng Ghi Nháp trên iOS?";
+						} else {
+							mess = "Download Ghi Nháp application on iOS?";
+						}
+						if (confirm(mess)) {
+							window.location = "https://itunes.apple.com/us/app/ghi-nhap/id1033925258?mt=8";
+						}
+					}, 500);
+
+		};
+	</script>
+	<iframe id="l" width="1" height="1" style="visibility: hidden"></iframe>
 
 	<script>
 		var intervalId;
@@ -76,7 +121,7 @@
 	</script>
 	<script>
 		$(document).ready(function() {
-			var getUrlParameter = function getUrlParameter(sParam) {
+			/* var getUrlParameter = function getUrlParameter(sParam) {
 			    var sPageURL = decodeURIComponent(document.location.search.substring(1)),
 			        sURLVariables = sPageURL.split('&'),
 			        sParameterName,
@@ -116,7 +161,7 @@
 						  }
 					  }, 500);
 				}
-			}
+			} */
 			$("#mainTextArea").val('${contents}');
 			setInputColor('green');
 			setEditorType('${type}');
@@ -128,9 +173,9 @@
 			} else {
 				$('#imgUnlock').remove();
 			}
-			
-			$('.linedwrap').css("width","100%");
-			$('linedtextarea').css("width","100%");
+
+			$('.linedwrap').css("width", "100%");
+			$('linedtextarea').css("width", "100%");
 		});
 		//set Time for Auto send function
 		function setTime(time) {
@@ -161,12 +206,12 @@
 		}
 		//onresize the browser window
 		function resizetoFix() {
-			var codelines = 75/$(window).width();
-			var maintext = (1 - codelines)*100;
+			var codelines = 75 / $(window).width();
+			var maintext = (1 - codelines) * 100;
 			var percent = maintext.toString() + "%";
-			$('.linedwrap').css("width","100%");
-			$('linedtextarea').css("width","100%");
-			$("textarea#mainTextArea").css("width",percent);
+			$('.linedwrap').css("width", "100%");
+			$('linedtextarea').css("width", "100%");
+			$("textarea#mainTextArea").css("width", percent);
 		}
 	</script>
 	<script>
