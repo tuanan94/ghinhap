@@ -1,5 +1,5 @@
 //var hostName = "http://localhost:8080/ghichu/";
-var hostName= location.protocol + '//' + location.host + "/ghichu/";
+var hostName= location.protocol + '//' + location.host + "/";
 /**
  * Init when start
  */

@@ -45,6 +45,12 @@
 	font-family: Roboto; 
 	font-size: 18px;
 }
+
+textarea#mainTextArea{
+	font-family: Tahoma, Arial,Helvetica, sans-serif;
+	font-size: 20px;
+}
+
 </style>
 </head>
 <body onresize="resizetoFix()">
@@ -70,9 +76,8 @@
 			/> 
 	</div>
 	<textarea id="mainTextArea" autocomplete="off" autocorrect="off" autocapitalize="on" spellcheck="false" onkeyup="onTextChange()"
-		oncut="onTextChange()" onpaste="onTextChange()" class="lined"
-		rows="200" cols="60">
-</textarea>
+		oncut="onTextChange()" onpaste="onTextChange()" class="lined" rows="200" cols="60" wrap="hard">
+	</textarea>
 
 	<script>
 		var intervalId;
@@ -82,7 +87,7 @@
 	</script>
 	<script>
 		$(document).ready(function() {
-			$("#mainTextArea").val('${contents}');
+			$("#mainTextArea").html('${contents}');
 			setInputColor('green');
 			setEditorType('${type}');
 			var isLock = '${isLock}';
@@ -95,17 +100,17 @@
 			}
 			
 			$('.linedwrap').css("width","99.5%");
+			$('.linedwrap').css("z-index","100");
 			$('linedtextarea').css("width","99.5%");
 			$('.lines').css("display","none");
-			$("textarea#mainTextArea").css("width","98%");
-			$("textarea#mainTextArea").css("font-size","20px");
+			$("textarea#mainTextArea").css("width","98.6%");
 		});
 		//set Time for Auto send function
 		function setTime(time) {
 			return window.setInterval($.sendContentToServer, time);
 		}
 		$.sendContentToServer = function sendContentToServer() {
-			var type = 0;
+			var type = "0";
 			requestUpdateContent($('#mainTextArea').val(), '${noteid}', type);
 			window.clearInterval(intervalId);
 		}
@@ -137,7 +142,7 @@
 			$('.lines').css("display","none");
 			/* $("textarea#mainTextArea").css("width",percent); */
 			
-			$("textarea#mainTextArea").css("width","98%");
+			$("textarea#mainTextArea").css("width","98.6%");
 		}
 	</script>
 	<script>
