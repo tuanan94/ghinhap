@@ -64,29 +64,66 @@ function setEditorType(value) {
  * 
  */
 function requestLock(noteid) {
-	var retVal = prompt("Nhập mật khẩu để khóa nháp này");
-	if (retVal == null || retVal == '') {
-		return;
-	}
-	$.ajax({
-		type : "POST",
-		url : hostName + "ajax/setpassword",
-		data : {
-			noteid : noteid,
-			password : retVal
-
-		},
-		success : function(data) {
-			if (data !== "true") {
-				alert(data);
-				return;
+	
+	var temp = {
+			state0: {
+				title: 'Khóa Nháp',
+				html:'<p>Nhập mật khẩu để khóa nháp này:</p>'+
+				'<input type="password" class="pure-input-1" name="password" value=""  />' +
+				'<br><br>' +	
+				'<label class="radio"><input type="radio" name="lock_type" value="unsecure" class="radioinput" checked/> Chỉ khóa cho chỉnh sửa nháp</label>'+
+						'<label class="pure-radio"><input type="radio" name="lock_type" value="secure" class="radioinput" /> Khóa cả cho xem và chỉnh sửa nháp</label>',
+				buttons: { Hủy: false, Khóa: true },
+				focus: 1,
+				submit:function(e,v,m,f){ 
+					if(!v)
+						$.prompt.close();
+					else {
+						console.log(f);
+						e.preventDefault();
+					}
+					return false;
+				}
 			}
-			location.reload();
-		},
-		error : function(xhr, textStatus, error) {
-			alert("Request lock fail, please try again!")
+	};
+	$.prompt(temp,{
+		classes: {
+			box: '',
+			fade: '',
+			prompt: '',
+			close: '',
+			title: 'lead',
+			message: 'pure-form',
+			buttons: '',
+			button: 'pure-button',
+			defaultButton: 'pure-button-primary'
 		}
 	});
+	
+//	
+//	var retVal = prompt("Nhập mật khẩu để khóa nháp này");
+//	if (retVal == null || retVal == '') {
+//		return;
+//	}
+//	$.ajax({
+//		type : "POST",
+//		url : hostName + "ajax/setpassword",
+//		data : {
+//			noteid : noteid,
+//			password : retVal
+//
+//		},
+//		success : function(data) {
+//			if (data !== "true") {
+//				alert(data);
+//				return;
+//			}
+//			location.reload();
+//		},
+//		error : function(xhr, textStatus, error) {
+//			alert("Request lock fail, please try again!")
+//		}
+//	});
 }
 /**
  * Request unlock content

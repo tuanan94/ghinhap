@@ -15,6 +15,9 @@
 <script type="text/javascript" src="<c:url value="/resources/src/ext-language_tools.js"/>"></script>
 
 
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/base.css"/>" />
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css" />
+<script type="text/javascript" src="<c:url value="/resources/script/jquery-impromptu.js"/>"></script>
 
 </head>
 <body>
