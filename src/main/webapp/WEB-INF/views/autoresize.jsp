@@ -50,7 +50,7 @@
 		editorInit(editor);
 		//set up when document ready
 		$(document).ready(function() {
-			setInitParam('${contents}', '${type}', '${isLock}');
+			setInitParam('${contents}', '${type}', '${isLock}', '${isSecure}');
 		});
 
 		$.sendContentToServer = function sendContentToServer() {

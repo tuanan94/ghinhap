@@ -59,9 +59,9 @@ public class NoteDAOImpl implements NoteDAO {
 			System.out.println("oldNote == null");
 			return false;
 		}
-		if (oldNote.isLock()) {
-			return false;
-		}
+//		if (oldNote.isLock()) {
+//			return false;
+//		}
 		oldNote.setContent(note.getContent());
 		oldNote.setType(note.getType());
 		oldNote.setModifydate(new Date(new java.util.Date().getTime()));
@@ -71,9 +71,10 @@ public class NoteDAOImpl implements NoteDAO {
 
 	@Override
 	@Transactional
-	public boolean setLock(String Noteid, boolean isLock) {
+	public boolean setLock(String Noteid, boolean isLock, boolean lock_type) {
 		Note oldNote = findNote(Noteid);
 		oldNote.setLock(isLock);
+		oldNote.setSecure(lock_type);
 		sessionFactory.getCurrentSession().save(oldNote);
 		return false;
 	}

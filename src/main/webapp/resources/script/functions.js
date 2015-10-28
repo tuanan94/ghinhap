@@ -3,16 +3,22 @@ var hostName= location.protocol + '//' + location.host + "/";
 /**
  * Init when start
  */
-function setInitParam(content, type, islock) {
-	console.log("ready!" + hostName);
-	editor.setValue(content, 1);
+function setInitParam(content, type, islock, isSecure) {
 	setEditorType(type);
 	setInputColor('green');
 	var isLock = islock;
+	editor.setValue(content, 1);
 	if (isLock === 'true') {
-		$('#imglock').remove();
-		editor.setReadOnly(true);
-		$('#typeSelector').prop("disabled", true);
+		if(isSecure === 'false'){
+			$('#imglock').remove();
+			editor.setReadOnly(true);
+			$('#typeSelector').prop("disabled", true);
+		} else {
+			$('#imglock').remove();
+			editor.setReadOnly(true);
+			$('#typeSelector').prop("disabled", true);
+//			$("pre").css("-webkit-filter","blur(5px)");
+		}
 	} else {
 		$('#imgUnlock').remove();
 	}
@@ -64,12 +70,12 @@ function setEditorType(value) {
  * 
  */
 function requestLock(noteid) {
-	
 	var temp = {
 			state0: {
 				title: 'Khóa Nháp',
 				html:'<p>Nhập mật khẩu để khóa nháp này:</p>'+
-				'<input type="password" class="pure-input-1" name="password" value=""  />' +
+				'<input type="hidden" name="noteid" value="'+ noteid +'" />' +
+				'<input type="password" class="pure-input-1" name="password" value="" required/>' +
 				'<br><br>' +	
 				'<label class="radio"><input type="radio" name="lock_type" value="unsecure" class="radioinput" checked/> Chỉ khóa cho chỉnh sửa nháp</label>'+
 						'<label class="pure-radio"><input type="radio" name="lock_type" value="secure" class="radioinput" /> Khóa cả cho xem và chỉnh sửa nháp</label>',
@@ -79,7 +85,21 @@ function requestLock(noteid) {
 					if(!v)
 						$.prompt.close();
 					else {
-						console.log(f);
+						$.ajax({
+							type : "POST",
+							url : hostName + "ajax/setpassword",
+							data : f,
+							success : function(data) {
+								if (data !== "true") {
+									alert(data);
+									return;
+								}
+								location.reload();
+							},
+							error : function(xhr, textStatus, error) {
+								alert("Request lock fail, please try again!")
+							}
+						});
 						e.preventDefault();
 					}
 					return false;
@@ -99,63 +119,78 @@ function requestLock(noteid) {
 			defaultButton: 'pure-button-primary'
 		}
 	});
-	
-//	
-//	var retVal = prompt("Nhập mật khẩu để khóa nháp này");
-//	if (retVal == null || retVal == '') {
-//		return;
-//	}
-//	$.ajax({
-//		type : "POST",
-//		url : hostName + "ajax/setpassword",
-//		data : {
-//			noteid : noteid,
-//			password : retVal
-//
-//		},
-//		success : function(data) {
-//			if (data !== "true") {
-//				alert(data);
-//				return;
-//			}
-//			location.reload();
-//		},
-//		error : function(xhr, textStatus, error) {
-//			alert("Request lock fail, please try again!")
-//		}
-//	});
 }
 /**
  * Request unlock content
  * 
  */
 function requestUnlock(noteid) {
-	var retVal = prompt("Nhập mật khẩu để mở khóa!");
-	if (retVal !== null && retVal !== '') {
-		$.ajax({
-			type : "POST",
-			url : hostName + "ajax/unsetpassword",
-			data : {
-				noteid : noteid,
-				password : retVal
-
-			},
-			success : function(data) {
-				if (data !== "true") {
-					alert(data);
+	var temp = {
+			state0: {
+				title: 'Mở Khóa',
+				html:'<p>Nhập mật khẩu để mở khóa:</p>'+
+				'<input type="hidden" name="noteid" value="'+ noteid +'" />' +
+				'<input type="password" class="pure-input-1" name="password" value="" required/>',
+				buttons: { Hủy: false, "Mở Khoá": true },
+				focus: 1,
+				submit:function(e,v,m,f){ 
+					if(!v)
+						$.prompt.close();
+					else {
+						$.ajax({
+							type : "POST",
+							url : hostName + "ajax/unsetpassword",
+							data : f,
+							success : function(data) {
+								if (data == "true") {
+									location.reload();
+									$('#typeSelector').prop("disabled", false);
+								} else if(data == "false") {
+									$.ajax({
+										type : "POST",
+										url : hostName + "ajax/getcontent",
+										data : f,
+										success : function(data) {
+											$.prompt.close();
+											$('#imglock').remove();
+											$('#imgUnlock').remove();
+											editor.setValue(data, 1);
+											editor.setReadOnly(false);
+											$('#typeSelector').prop("disabled", false);
+//											$("pre").css("-webkit-filter","blur(0px)");
+										}
+									});
+								} else {
+									alert(data);
+								}
+							},
+							error : function(xhr, textStatus, error) {
+								alert("Request unlock fail, please try again!")
+							}
+						});
+						e.preventDefault();
+					}
+					return false;
 				}
-				location.reload();
-				$('#typeSelector').prop("disabled", false);
-			},
-			error : function(data) {
-				alert("set fail")
 			}
-		});
-	}
+	};
+	$.prompt(temp,{
+		classes: {
+			box: '',
+			fade: '',
+			prompt: '',
+			close: '',
+			title: 'lead',
+			message: 'pure-form',
+			buttons: '',
+			button: 'pure-button',
+			defaultButton: 'pure-button-primary'
+		}
+	});
 }
 
 /**
- * Request update conten
+ * Request update content
  * 
  */
 function requestUpdateContent(content, noteid, type) {
@@ -187,6 +222,7 @@ function editorInit(editor) {
 	editor.setTheme("ace/theme/tomorrow");
 	editor.session.setMode("ace/mode/html");
 	editor.setOptions({
+		minLines: 50,
 		maxLines : 4000,
 		enableBasicAutocompletion : true,
 		enableSnippets : true,

@@ -10,6 +10,6 @@ public interface NoteDAO {
 	public boolean addNote(Note note);
 	public Note findNote(String noteId);
 	public boolean editNote(Note note);
-	public boolean setLock(String Noteid, boolean isLock);
+	public boolean setLock(String Noteid, boolean isLock,boolean lock_type);
 	public ArrayList<String> getLastestNotes();
 }

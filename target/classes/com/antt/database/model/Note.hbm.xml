@@ -11,6 +11,7 @@
         <property name="createddate" column="createddate" />
         <property name="modifydate" column="modifydate" />
         <property name="lock" column="islock" />
+        <property name="secure" column="isSecure" />
     </class> 
     <class name="NotePass" table="notepass">
     	<id name="noteId" column="noteId" ></id>

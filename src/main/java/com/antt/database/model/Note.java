@@ -7,11 +7,21 @@ public class Note {
 	private String content;
 	private Integer type;
 	private boolean lock;
+	private boolean secure;
 	private Date createddate;
 	private Date modifydate;
 	public String getNoteid() {
 		return noteid;
 	}
+	
+	public boolean isSecure() {
+		return secure;
+	}
+
+	public void setSecure(boolean secure) {
+		this.secure = secure;
+	}
+
 	public void setNoteid(String noteid) {
 		this.noteid = noteid;
 	}
@@ -59,14 +69,14 @@ public class Note {
 		this.lock = false;
 		
 	}
-	public Note(String noteid, String content, int type, Date createdDate, Date ModifyDate, boolean isLocked) {
+	public Note(String noteid, String content, int type, Date createdDate, Date ModifyDate, boolean isLocked, boolean isSecure) {
 		this.noteid = noteid;
 		this.content =  content;
 		this.type = type;
 		this.createddate = createdDate;
 		this.modifydate = ModifyDate;
 		this.lock = isLocked;
-		
+		this.secure = isSecure;
 	}
 	
 	@Override

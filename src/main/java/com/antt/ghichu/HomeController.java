@@ -24,6 +24,8 @@ import com.antt.database.dao.NoteDAO;
 import com.antt.database.dao.NotePassDAO;
 import com.antt.database.model.Note;
 import com.antt.database.model.NotePass;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Handles requests for the application home page.
@@ -91,18 +93,22 @@ public class HomeController {
 				curNote = new Note(fixId, "", 0, date, date);
 				noteDAO.addNote(curNote);
 			}
-			// Add more empty line to note
-			curNote.setContent(curNote.getContent() + emptyLines);
-
-			// Add more empty line to note
-			model.addAttribute("contents",
-					curNote.getContent()
-							.replaceAll("(\\r|\\n|\\r\\n)", "\\\\n")
-							.replaceAll("'", "\\\\'"));
-
+			
+			if(!curNote.isSecure()){	
+				// Add more empty line to note
+//				curNote.setContent(curNote.getContent() + emptyLines);
+	
+				// Add more empty line to note
+				model.addAttribute("contents",
+						curNote.getContent() );
+			} else {
+				String message = "Vui lòng nhập password để thấy nội dung này!" + emptyLines;
+				model.addAttribute("contents",message);
+			}
 			model.addAttribute("noteid", curNote.getNoteid());
 			model.addAttribute("type", curNote.getType());
 			model.addAttribute("isLock", curNote.isLock());
+			model.addAttribute("isSecure", curNote.isSecure());
 			String userAgent = request.getHeader("User-Agent");
 
 			System.out.println(userAgent);
@@ -121,26 +127,30 @@ public class HomeController {
 			@RequestParam(value = "type", required = false) String type) {
 		String receivedContents = contents;
 		Date date = new Date(new java.util.Date().getTime());
-		while (receivedContents.length() > 0
-				&& receivedContents.charAt(receivedContents.length() - 1) == 10) {
-			receivedContents = receivedContents.substring(0,
-					receivedContents.length() - 1);
-		}
-		for (int i = receivedContents.length() - 1; i >= 0; i--) {
-			// t = receivedContents.charAt(i);
-			// System.out.println((int)t);
-		}
-		noteDAO.editNote(new Note(noteid, receivedContents, Integer
-				.parseInt(type), date, date));
+//		while (receivedContents.length() > 0
+//				&& receivedContents.charAt(receivedContents.length() - 1) == 10) {
+//			receivedContents = receivedContents.substring(0,
+//					receivedContents.length() - 1);
+//		}
+//		for (int i = receivedContents.length() - 1; i >= 0; i--) {
+//			// t = receivedContents.charAt(i);
+//			// System.out.println((int)t);
+//		}
+		Note note = noteDAO.findNote(noteid);
+		note.setModifydate(date);
+		note.setContent(receivedContents);
+		note.setType(Integer.parseInt(type));
+		noteDAO.editNote(note);
 		return "true";
 	}
 
 	@RequestMapping(value = "/ajax/setpassword", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String setPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "lock_type", required = false) String lock_type,
 			@RequestParam(value = "password", required = false) String password) {
 		if (password == null || password.equals("")) {
-			return "false";
+			return "Password không được để trống!";
 		}
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
 		if (getOldNotePass != null
@@ -150,8 +160,9 @@ public class HomeController {
 		Date date = new Date(new java.util.Date().getTime());
 		NotePass newNotePass = new NotePass(noteid, password, date);
 		notePassDAO.editNotePass(newNotePass);
-		noteDAO.setLock(noteid, true);
-
+		System.out.println("lock type: " + lock_type);
+		noteDAO.setLock(noteid, true,lock_type.equals("secure") ? true : false);
+				
 		return "true";
 	}
 
@@ -159,20 +170,42 @@ public class HomeController {
 	public @ResponseBody String unSetPassword(
 			@RequestParam(value = "noteid", required = false) String noteid,
 			@RequestParam(value = "password", required = false) String password) {
-		System.out.println("Unset Password FunctionnIscalled with noteid="
-				+ noteid + "password" + password);
+
+		Note note = noteDAO.findNote(noteid);
 		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
 		if (getOldNotePass == null
 				|| (!getOldNotePass.getPassword().equals(password))) {
 			return "Password không đúng!";
 		}
-		Date date = new Date(new java.util.Date().getTime());
-		NotePass newNotePass = new NotePass(noteid, "", date);
-		notePassDAO.editNotePass(newNotePass);
-
-		noteDAO.setLock(noteid, false);
-
-		return "true";
+		
+		if(!note.isSecure()){
+			Date date = new Date(new java.util.Date().getTime());
+			NotePass newNotePass = new NotePass(noteid, "", date);
+			notePassDAO.editNotePass(newNotePass);
+			
+			noteDAO.setLock(noteid, false,false);
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/ajax/getcontent", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String getcontent(
+			@RequestParam(value = "noteid", required = false) String noteid,
+			@RequestParam(value = "password", required = false) String password) {
+		Note note = noteDAO.findNote(noteid);
+		NotePass getOldNotePass = notePassDAO.findNotePass(noteid);
+		if (getOldNotePass == null
+				|| (!getOldNotePass.getPassword().equals(password))) {
+			return "";
+		}
+		String content = note.getContent() + emptyLines;
+		
+		Gson gson = new GsonBuilder().create();
+		String json = gson.toJson(content);
+		return note.getContent();
 	}
 
 	@RequestMapping(value = "/ajax/getCanvasContent", method = RequestMethod.POST, headers = "Accept=application/json")
